@@ -1,0 +1,3 @@
+package join
+
+type DetailStores 

@@ -2,11 +2,11 @@ DROP TABLE IF EXISTS `app_users`;
 
 create table if not exists `app_users`
 (
-    id               bigint unsigned ,
+    id               bigint unsigned AUTO_INCREMENT,
     name             text NOT NULL,
     sex              tinyint unsigned,
     age              tinyint unsigned,
-    sign_id          text NOT NULL,
+    sign_id          text unique NOT NULL,
     sign_pw          text NOT NULL,
     disabled         boolean DEFAULT NULL,
     created_at       Datetime DEFAULT NULL,
