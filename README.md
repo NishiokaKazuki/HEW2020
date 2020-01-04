@@ -13,3 +13,4 @@
 - web-app
     - `React`で実装されたWebAppです。
 
+docker-compose exec mysql bash -U root -d hew2020

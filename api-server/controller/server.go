@@ -1,15 +1,19 @@
 package controller
 
 import (
+	"api-server/controller/query"
 	"api-server/generated/enums"
 	"api-server/generated/messages"
-	"api-server/generated/services"
+	pb "api-server/generated/services"
+	"api-server/model/table"
 	"context"
+	"log"
+	"net"
+
+	"google.golang.org/grpc"
 )
 
-type server struct {
-	services.UnimplementedWebAppServiceServer
-}
+type server struct{}
 
 func (s *server) Auth(ctx context.Context, in *messages.AuthRequest) (*messages.AuthResponse, error) {
 
@@ -38,7 +42,7 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 	}, nil
 }
 
-func (s *server) SignOut(ctx context.Context, in *messages.SignUpRequest) (*messages.AuthResponse, error) {
+func (s *server) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
 
 	return &messages.AuthResponse{
 		Status:     true,
@@ -48,15 +52,27 @@ func (s *server) SignOut(ctx context.Context, in *messages.SignUpRequest) (*mess
 }
 
 func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.UserResponse, error) {
+	var (
+		user table.AppUsers
+	)
+
+	user, err := query.GetUser(ctx, 1) // id is dummy
+	if err != nil {
+		return &messages.UserResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+			User:       &messages.UserResponse_AppUser{},
+		}, nil
+	}
 
 	return &messages.UserResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		User: &messages.UserResponse_AppUser{
-			Id:   1,
-			Name: "test",
-			Sex:  enums.SexTypes_SEX_MALE,
-			Age:  20,
+			Id:   user.Id,
+			Name: user.Name,
+			Sex:  user.Sex,
+			Age:  user.Age,
 		},
 	}, nil
 }
@@ -91,16 +107,23 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 	}, nil
 }
 
-func (s *server) Product(ctx context.Context, in *messages.StoreRequest) (*messages.ProductResponse, error) {
+func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*messages.ProductResponse, error) {
+	var (
+		product table.Products
+	)
+
+	product, err := query.GetProduct(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
 
 	return &messages.ProductResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Id:         1,
-		Name:       "コーラ",
-		Price:      150,
-		Stock:      3,
-		Type:       1,
+		Id:         product.Id,
+		Name:       product.Name,
+		Price:      product.Price,
+		Type:       product.Type,
 	}, nil
 }
 
@@ -116,4 +139,20 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		Pages:           1,
 		CurrentPage:     1,
 	}, nil
+}
+
+func StartingServer(port string) {
+	listenPort, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	s := grpc.NewServer()
+	pb.RegisterWebAppServiceServer(s, &server{})
+
+	log.Println("startingserver", port)
+	err = s.Serve(listenPort)
+	if err != nil {
+		log.Fatal("failed open", port)
+	}
 }

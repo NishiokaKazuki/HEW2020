@@ -25,7 +25,7 @@ func GormConnect() *gorm.DB {
 }
 
 func GetDBConfig() (string, string) {
-	conf, err := configs.ReadDBConfig("../configs/config.toml")
+	conf, err := configs.ReadDBConfig("configs/config.toml")
 	if err != nil {
 		panic(err.Error())
 	}

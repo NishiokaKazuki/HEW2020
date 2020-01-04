@@ -9,6 +9,7 @@ type AppUsers struct {
 	Id     uint64
 	Name   string
 	Sex    enums.SexTypes
+	Age    uint32
 	SignId string
 	SignPw string
 }
@@ -30,7 +31,7 @@ type Products struct {
 	Name  string
 	Image string
 	Price uint32
-	Type  uint8
+	Type  uint32
 }
 
 type RfidTags struct {
