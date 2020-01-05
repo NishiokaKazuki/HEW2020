@@ -1,23 +1,23 @@
 INSERT INTO app_users(name, sex, age, sign_id, sign_pw, disabled) VALUES
-    ('じゅんじゅん', 1, 20, "junjun", "secret", 0),
-    ('えいぽん', 1, 19, "eipon", "secret", 0),
-    ('なっかー', 1, 20, "nakkar", "secret", 1),
-    ('ぶでぃ', 1, 24, "debu", "secret", 1),
-    ('おかぽん', 1, 20, "okapon", "secret", 0),
-    ('かなみん', 2, 20, "kanamin", "secret", 0),
-    ('おやかた', 2, 20, "oyakata", "secret", 1);
-
-INSERT INTO stores(image, address, company, disabled) VALUES
-    ('image1', '滋賀県彦根市', 1, 0),
-    ('image2', '岐阜県恵那市', 2, 0),
-    ('image3', '大阪府堺市', 3, 1),
-    ('image4', '北極しろくま市', 4, 0);
+    ('じゅんじゅん', 1, 20, "junjun", "secret", false),
+    ('えいぽん', 1, 19, "eipon", "secret", false),
+    ('なっかー', 1, 20, "nakkar", "secret", true),
+    ('ぶでぃ', 1, 24, "debu", "secret", true),
+    ('おかぽん', 1, 20, "okapon", "secret", false),
+    ('かなみん', 2, 20, "kanamin", "secret", false),
+    ('おやかた', 2, 20, "oyakata", "secret", true);
 
 INSERT INTO companies(name, disabled) VALUES
     ('セブンイレブン', 0),
     ('ローソン', 1),
     ('ファミリーマート', 0),
     ('HAL大阪', 0);
+
+INSERT INTO stores(company_id, image, address, disabled) VALUES
+    (1, 'image1', '滋賀県彦根市', 0),
+    (2, 'image2', '岐阜県恵那市', 0),
+    (3, 'image3', '大阪府堺市', 1),
+    (4, 'image4', '北極しろくま市', 0);
 
 INSERT INTO products(name, image, price, type, disabled) VALUES
     ('コーラ', 'image1', 150, 1, 0),
