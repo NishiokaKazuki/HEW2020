@@ -95,15 +95,42 @@ func (s *server) Stores(ctx context.Context, in *messages.StoresRequest) (*messa
 
 func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*messages.StoreResponse, error) {
 	var (
-		store   *messages.StoreResponse_Store
-		company *messages.StoreResponse_Company
+		products []*messages.StoreResponse_Product
 	)
+
+	// wip:Auth
+
+	stores, err := query.GetStore(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	ps, err := query.FindProducts(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+	for _, product := range ps {
+		products = append(products, &messages.StoreResponse_Product{
+			Id:    product.Id,
+			Name:  product.Name,
+			Price: product.Price,
+			Stock: product.Stock,
+		})
+	}
 
 	return &messages.StoreResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Store:      store,
-		Company:    company,
+		Store: &messages.StoreResponse_Store{
+			Id: stores.Stores.Id,
+			// Image: stores.Stores.Image,
+			Address: stores.Stores.Address,
+		},
+		Company: &messages.StoreResponse_Company{
+			Id:   stores.Companies.Id,
+			Name: stores.Name,
+		},
+		Products: products,
 	}, nil
 }
 
