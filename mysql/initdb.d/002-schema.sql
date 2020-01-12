@@ -1,109 +1,118 @@
-DROP TABLE IF EXISTS `app_users`;
+SET CHARSET utf8;
 
-create table if not exists `app_users`
+DROP TABLE IF EXISTS app_users;
+
+CREATE TABLE app_users
 (
-    id               bigint unsigned ,
+    id               bigint unsigned AUTO_INCREMENT,
     name             text NOT NULL,
-    sex              tinyint unsigned,
-    age              tinyint unsigned,
-    sign_id          text NOT NULL,
-    sign_pw          text NOT NULL,
+    sex              int unsigned,
+    age              int unsigned,
+    sign_id          VARCHAR(255) unique NOT NULL,
+    sign_pw          VARCHAR(255) NOT NULL,
     disabled         boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
-    PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
-DROP TABLE IF EXISTS `stores`;
-
-create table if not exists `stores`
-(
-    id               bigint unsigned ,
-    image            text,
-    address          text,
-    company_id       bigint unsigned NOT NULL,
-    disabled         boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
-    FOREIGN KEY (company_id) REFERENCES companies(id),
-    PRIMARY KEY (`id`)
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 
-DROP TABLE IF EXISTS `companies`;
+DROP TABLE IF EXISTS companies;
 
-create table if not exists `companies`
+CREATE TABLE companies
 (
-    id               bigint unsigned,
+    id               bigint unsigned AUTO_INCREMENT,
     name             text,
     disabled         boolean DEFAULT NULL,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-   PRIMARY KEY (`id`)
+    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS stores;
 
-create table if not exists `products`
+CREATE TABLE stores
 (
-    id               bigint unsigned ,
-    name             text NOT NULL,
+    id               bigint unsigned AUTO_INCREMENT,
+    company_id       bigint unsigned,
     image            text,
-    price            int unsigned NOT NULL,
-    type             tinyint unsigned NOT NULL,
+    address          text,
     disabled         boolean DEFAULT NULL,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-   PRIMARY KEY (`id`)
+    FOREIGN KEY (company_id) 
+    REFERENCES companies(id),
+    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `rfid_tags`;
+DROP TABLE IF EXISTS products;
 
-create table if not exists `rfid_tags`
+CREATE TABLE products
 (
-    id               bigint unsigned,
+    id               bigint unsigned AUTO_INCREMENT,
+    name             text NOT NULL,
+    image            text,
+    price            int unsigned NOT NULL,
+    type             int unsigned NOT NULL,
+    disabled         boolean DEFAULT NULL,
+    created_at       Datetime DEFAULT NULL,
+    updated_at       Datetime DEFAULT NULL,
+   PRIMARY KEY (id)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS rfid_tags;
+
+CREATE TABLE rfid_tags
+(
+    id               bigint unsigned AUTO_INCREMENT,
     product_id       bigint unsigned NOT NULL,
     rfid_code        text NOT NULL,
     sold             boolean DEFAULT NULL,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id),
-   PRIMARY KEY (`id`)
+    FOREIGN KEY (product_id) 
+     REFERENCES products(id),
+    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `product_stocks`;
+DROP TABLE IF EXISTS product_stocks;
 
-create table if not exists `product_stocks`
+CREATE TABLE product_stocks
 (
     store_id         bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
     stock            int    unsigned,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-    FOREIGN KEY (store_id) REFERENCES stores(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (store_id) 
+     REFERENCES stores(id),
+    FOREIGN KEY (product_id) 
+     REFERENCES products(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `bought_products`;
+DROP TABLE IF EXISTS bought_products;
 
-create table if not exists `bought_products`
+CREATE TABLE bought_products
 (
     user_id          bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
     date             Datetime DEFAULT NULL,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) 
+     REFERENCES app_users(id),
+    FOREIGN KEY (product_id) 
+     REFERENCES products(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `face_ids`;
+DROP TABLE IF EXISTS face_ids;
 
-create table if not exists `face_ids`
+CREATE TABLE face_ids
 (
     user_id          bigint unsigned NOT NULL,
     image            text NOT NULL,
     created_at       Datetime DEFAULT NULL,
     updated_at       Datetime DEFAULT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (user_id) 
+     REFERENCES app_users(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

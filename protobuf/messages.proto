@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package enums;
-option go_package = "api-server/generated/functions";
+package messages;
+option go_package = "api-server/generated/messages";
 
 import "enums.proto";
 
@@ -12,7 +12,6 @@ message AuthResponse {
     bool status = 1;
     enums.StatusCodes status_code = 2;
     string token = 3;
-    string user_name = 4;
 }
 
 message SignInRequest {
@@ -20,8 +19,14 @@ message SignInRequest {
     string user_pw = 2;
 }
 message SignUpRequest {
-    string user_id = 1;
-    string user_pw = 2;
+    string name  = 1;
+    enums.SexTypes sex = 2;
+    uint32 age = 3;
+    string user_id = 4;
+    string user_pw = 5;
+}
+message SignOutRequest {
+    string token = 1;
 }
 
 message StoresRequest {
@@ -81,11 +86,13 @@ message ProductRequest {
     uint64 id = 2;
 }
 message ProductResponse {
-    uint64 id = 1;
-    string name = 2;
-    uint32 price = 3;
-    uint32 stock = 4;
-    uint32 type = 5;
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    uint64 id = 3;
+    string name = 4;
+    uint32 price = 5;
+    uint32 stock = 6;
+    uint32 type = 7;
 }
 
 message UserRequest {
@@ -111,6 +118,7 @@ message ClearingHistoryResponse {
     enums.StatusCodes status_code = 2;
     uint32 pages = 3;
     uint32 current_page = 4;
+    Clearing ClearingHistory = 5;
 
     message Clearing {
         uint32 total_amount = 1;
