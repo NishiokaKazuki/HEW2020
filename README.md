@@ -7,6 +7,7 @@ HEW2020 で開発する `顔認証型自動機コンビニ` のWeb Application. 
   - Go
 - Frontend
   - React
+  - TypeScript
 
 ## Directory
 - api-server
