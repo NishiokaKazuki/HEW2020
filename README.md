@@ -1,16 +1,48 @@
- # Project HEW2020
- このプロジェクトはHEW2020で作成する`顔認証型自動機コンビニ`のためのWebAppになります。ユーザ情報や店舗情報の閲覧などが可能です。
+# Project HEW2020
+`顔認証型自動機コンビニ` の Web Application
 
- ## ディレクトリ説明
- - api-server
-    - `Golang`で開発されたAPIサーバーです。gRPCを利用しています。
+## Description
+HEW2020 で開発する `顔認証型自動機コンビニ` のWeb Application. コンビニと連携したユーザ情報や店舗情報などが閲覧可能.
+- Backend
+  - Go
+- Frontend
+  - React
+  - TypeScript
+
+## Directory
+- api-server
+    - `Go`で実装したAPI。
+- client
+    - `React`で実装したUI。
 - docker 
-    - docker-composeの設定ファイルが入っています。
+    - `docker-compose`を格納。
 - mysql
-    - docker上で稼働するDBの`SQL`が入っています。
+    - DBで使用する`SQL`を格納。
 - protobuf
-    - gRPCの通信内容を`Protocol Buffers`を利用し定義しています。
-- web-app
-    - `React`で実装されたWebAppです。
+    - gRPCの通信内容を`Protocol Buffers`で定義。
 
-docker-compose exec mysql bash -U root -d hew2020
+## Usage
+**Run API server :**
+```
+cd api-server &&\
+go run main.go
+```
+**Run React App :**
+```
+cd client &&\
+yarn start
+```
+
+## Install
+```Git
+git clone https://github.com/NishiokaKazuki/HEW2020.git
+```
+
+## Author
+- Backend
+  - [@kazuking_93](https://twitter.com/kazuking_93)
+- Frontend + AWS
+    - [@KHiroki86_](https://twitter.com/KHiroki86_)
+
+## License
+[MIT license](https://b4b4r07.mit-license.org/)
