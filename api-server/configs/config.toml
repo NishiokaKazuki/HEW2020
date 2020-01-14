@@ -9,3 +9,5 @@ pass = "secret"
 protocol = "tcp(localhost:13306)"
 dbname = "hew2020"
 
+[TOKEN]
+exp = "24"

@@ -57,3 +57,9 @@ type FaceIds struct {
 	UserId uint64
 	Image  string
 }
+
+type Tokens struct {
+	Id     uint64
+	UserId uint64
+	Token  string
+}

@@ -24,8 +24,8 @@ CREATE TABLE companies
     id               bigint unsigned AUTO_INCREMENT,
     name             text,
     disabled         boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -38,8 +38,8 @@ CREATE TABLE stores
     image            text,
     address          text,
     disabled         boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (company_id) 
     REFERENCES companies(id),
     PRIMARY KEY (id)
@@ -55,8 +55,8 @@ CREATE TABLE products
     price            int unsigned NOT NULL,
     type             int unsigned NOT NULL,
     disabled         boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -68,8 +68,8 @@ CREATE TABLE rfid_tags
     product_id       bigint unsigned NOT NULL,
     rfid_code        text NOT NULL,
     sold             boolean DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (product_id) 
      REFERENCES products(id),
     PRIMARY KEY (id)
@@ -82,8 +82,8 @@ CREATE TABLE product_stocks
     store_id         bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
     stock            int    unsigned,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (store_id) 
      REFERENCES stores(id),
     FOREIGN KEY (product_id) 
@@ -97,8 +97,8 @@ CREATE TABLE bought_products
     user_id          bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
     date             Datetime DEFAULT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id),
     FOREIGN KEY (product_id) 
@@ -111,8 +111,22 @@ CREATE TABLE face_ids
 (
     user_id          bigint unsigned NOT NULL,
     image            text NOT NULL,
-    created_at       Datetime DEFAULT NULL,
-    updated_at       Datetime DEFAULT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+DROP TABLE IF EXISTS tokens;
+
+CREATE TABLE tokens
+(
+    id              bigint unsigned AUTO_INCREMENT,
+    user_id         bigint unsigned NOT NULL,
+    token           text NOT NULL,
+    created_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    FOREIGN KEY (user_id) 
+     REFERENCES app_users(id),
+    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

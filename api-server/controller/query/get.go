@@ -62,10 +62,27 @@ func GetProduct(ctx context.Context, id uint64) (table.Products, error) {
 		"id = ?",
 		id,
 	).First(&product)
-
 	if product.Id != id {
 		err = errors.New("error : table[products] is not found.")
 	}
 
 	return product, err
+}
+
+func GetAuthTokens(ctx context.Context, token string) (table.Tokens, error) {
+	var (
+		tokens table.Tokens
+		err    error
+	)
+
+	db := db.GetDBConnect()
+	db.Where(
+		"tokens.token = ? AND tokens.updated_at < (NOW() + 1 DAY)",
+		token,
+	).First(&tokens)
+	if tokens.Token != token {
+		err = errors.New("error : table[tokens] is not found.")
+	}
+
+	return tokens, err
 }

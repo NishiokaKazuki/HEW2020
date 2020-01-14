@@ -2,6 +2,7 @@ package controller
 
 import (
 	"api-server/controller/query"
+	"api-server/controller/utils"
 	"api-server/generated/enums"
 	"api-server/generated/messages"
 	pb "api-server/generated/services"
@@ -26,19 +27,59 @@ func (s *server) Auth(ctx context.Context, in *messages.AuthRequest) (*messages.
 
 func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messages.AuthResponse, error) {
 
+	user, err := signin(ctx, in.UserId, in.UserPw)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, err
+	}
+
+	token, err := query.CreateToken(ctx, user)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, err
+	}
+
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Token:      "test",
+		Token:      token,
 	}, nil
 }
 
 func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messages.AuthResponse, error) {
 
+	user, err := query.CreateUser(ctx, table.AppUsers{
+		Name:   in.Name,
+		Sex:    in.Sex,
+		Age:    in.Age,
+		SignId: in.UserId,
+		SignPw: utils.HashPw(in.UserPw),
+	})
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+			Token:      "",
+		}, err
+	}
+
+	token, err := query.CreateToken(ctx, user)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+			Token:      "",
+		}, err
+	}
+
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Token:      "XXXX1234",
+		Token:      token,
 	}, nil
 }
 
@@ -56,13 +97,22 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 		user table.AppUsers
 	)
 
-	user, err := query.GetUser(ctx, 1) // id is dummy
+	id, err := Auth(ctx, in.Token)
+	if err != nil {
+		return &messages.UserResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+			User:       &messages.UserResponse_AppUser{},
+		}, err
+	}
+
+	user, err = query.GetUser(ctx, id)
 	if err != nil {
 		return &messages.UserResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
 			User:       &messages.UserResponse_AppUser{},
-		}, nil
+		}, err
 	}
 
 	return &messages.UserResponse{
@@ -98,16 +148,28 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		products []*messages.StoreResponse_Product
 	)
 
-	// wip:Auth
+	_, err := Auth(ctx, in.Token)
+	if err != nil {
+		return &messages.StoreResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, err
+	}
 
 	stores, err := query.GetStore(ctx, in.Id)
 	if err != nil {
-		return nil, err
+		return &messages.StoreResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, err
 	}
 
 	ps, err := query.FindProducts(ctx, in.Id)
 	if err != nil {
-		return nil, err
+		return &messages.StoreResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, err
 	}
 	for _, product := range ps {
 		products = append(products, &messages.StoreResponse_Product{
@@ -138,10 +200,20 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 	var (
 		product table.Products
 	)
-
-	product, err := query.GetProduct(ctx, in.Id)
+	_, err := Auth(ctx, in.Token)
 	if err != nil {
-		return nil, err
+		return &messages.ProductResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, err
+	}
+
+	product, err = query.GetProduct(ctx, in.Id)
+	if err != nil {
+		return &messages.ProductResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, err
 	}
 
 	return &messages.ProductResponse{

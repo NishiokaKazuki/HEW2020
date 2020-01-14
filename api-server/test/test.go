@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
 
+	"api-server/generated/enums"
 	"api-server/generated/messages"
 	pb "api-server/generated/services"
 
@@ -27,15 +28,19 @@ func main() {
 	client := pb.NewWebAppServiceClient(conn)
 
 	// タイムアウトを20秒に設定する
-	context, cancel := context.WithTimeout(context.Background(), time.Second*20)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*20)
 	defer cancel()
 
 	sw := os.Args
 	switch sw[1] {
 	case "user":
-		user(context, client)
+		user(ctx, client)
 	case "store":
-		store(context, client)
+		store(ctx, client)
+	case "signup":
+		signup(ctx, client)
+	case "signin":
+		signin(ctx, client)
 	}
 }
 
@@ -65,8 +70,9 @@ func store(ctx context.Context, client pb.WebAppServiceClient) {
 }
 
 func user(ctx context.Context, client pb.WebAppServiceClient) {
+	args := os.Args
 	res, err := client.User(ctx, &messages.UserRequest{
-		Token: "test",
+		Token: args[2],
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -74,4 +80,39 @@ func user(ctx context.Context, client pb.WebAppServiceClient) {
 
 	log.Printf("%#v\n", res.User.Name)
 	log.Println(res)
+}
+
+func signup(ctx context.Context, client pb.WebAppServiceClient) {
+	_, err := client.SignUp(ctx, &messages.SignUpRequest{
+		Name:   "NewAccount",
+		Sex:    enums.SexTypes_SEX_MALE,
+		Age:    18,
+		UserId: "NewAccount",
+		UserPw: "pass_1",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	res, err := client.User(ctx, &messages.UserRequest{
+		Token: "test",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(res)
+}
+
+func signin(ctx context.Context, client pb.WebAppServiceClient) {
+	args := os.Args
+	res, err := client.SignIn(ctx, &messages.SignInRequest{
+		UserId: args[2],
+		UserPw: args[3],
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(res.Token)
 }
