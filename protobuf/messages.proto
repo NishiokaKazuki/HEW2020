@@ -131,3 +131,16 @@ message ClearingHistoryResponse {
         }
     }
 }
+
+message FaceAuthRequest {
+    string id = 1;
+}
+
+message PurchaseRequest {
+    string token = 1;
+    repeated string tag = 2;
+}
+message PurchaseResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+}

@@ -85,10 +85,11 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 
 func (s *server) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
 
+	_ = query.DeleteToken(ctx, in.Token)
+
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Token:      "",
 	}, nil
 }
 
