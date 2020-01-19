@@ -3,6 +3,7 @@ package query
 import (
 	"api-server/model/db"
 	"api-server/model/join"
+	"api-server/model/table"
 	"context"
 	"errors"
 )
@@ -13,8 +14,7 @@ func FindProducts(ctx context.Context, storeId uint64) ([]join.Products, error) 
 		err      error
 	)
 
-	db := db.GormConnect()
-	db.Table(
+	db.GormConnect().Table(
 		"products",
 	).Select(
 		"products.*, product_stocks.*",
@@ -30,4 +30,28 @@ func FindProducts(ctx context.Context, storeId uint64) ([]join.Products, error) 
 	}
 
 	return products, err
+}
+
+func FindProductsByCode(ctx context.Context, tags []string) ([]table.Products, error) {
+	var (
+		products []table.Products
+	)
+
+	for _, tag := range tags {
+		var product table.Products
+		result := db.GormConnect().Table(
+			"rfid_tags",
+		).Joins(
+			"inner join product_stocks on product_stocks.product_id = products.id",
+		).Where(
+			"product_stocks.store_id = ?",
+			tag,
+		).Scan(&product)
+		if result.Error != nil {
+			return nil, errors.New("error : table[products] is not found.")
+		}
+		products = append(products, product)
+	}
+
+	return products, nil
 }

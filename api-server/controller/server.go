@@ -35,7 +35,7 @@ func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messa
 		}, err
 	}
 
-	token, err := query.CreateToken(ctx, user)
+	token, err := query.CreateToken(ctx, user, true)
 	if err != nil {
 		return &messages.AuthResponse{
 			Status:     false,
@@ -67,7 +67,7 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 		}, err
 	}
 
-	token, err := query.CreateToken(ctx, user)
+	token, err := query.CreateToken(ctx, user, true)
 	if err != nil {
 		return &messages.AuthResponse{
 			Status:     false,
@@ -85,7 +85,7 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 
 func (s *server) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
 
-	_ = query.DeleteToken(ctx, in.Token)
+	_ = query.DeleteToken(ctx, in.Token, true)
 
 	return &messages.AuthResponse{
 		Status:     true,

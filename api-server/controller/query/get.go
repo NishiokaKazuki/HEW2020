@@ -14,8 +14,7 @@ func GetUser(ctx context.Context, id uint64) (table.AppUsers, error) {
 		err  error
 	)
 
-	db := db.GetDBConnect()
-	db.Where(
+	db.GetDBConnect().Where(
 		"id = ?",
 		id,
 	).First(&user)
@@ -32,8 +31,7 @@ func GetStore(ctx context.Context, id uint64) (join.Stores, error) {
 		err   error
 	)
 
-	db := db.GetDBConnect()
-	db.Table(
+	db.GetDBConnect().Table(
 		"stores",
 	).Select(
 		"stores.*, companies.*",
@@ -56,9 +54,8 @@ func GetProduct(ctx context.Context, id uint64) (table.Products, error) {
 		product table.Products
 		err     error
 	)
-	db := db.GetDBConnect()
 
-	db.Where(
+	db.GetDBConnect().Where(
 		"id = ?",
 		id,
 	).First(&product)
@@ -69,20 +66,48 @@ func GetProduct(ctx context.Context, id uint64) (table.Products, error) {
 	return product, err
 }
 
-func GetAuthTokens(ctx context.Context, token string) (table.Tokens, error) {
+func GetAuthTokens(ctx context.Context, token string, isApp bool) (table.Tokens, error) {
 	var (
 		tokens table.Tokens
 		err    error
 	)
 
-	db := db.GetDBConnect()
-	db.Where(
-		"tokens.token = ? AND tokens.updated_at < (NOW() + 1 DAY)",
+	db.GetDBConnect().Where(
+		"tokens.token = ? AND is_app = ? AND tokens.updated_at > DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)",
 		token,
+		isApp,
 	).First(&tokens)
 	if tokens.Token != token {
 		err = errors.New("error : table[tokens] is not found.")
 	}
 
 	return tokens, err
+}
+
+func GetUserWithFaceId(ctx context.Context, faceId string) (table.AppUsers, error) {
+	var (
+		user    table.AppUsers
+		faceIds table.FaceIds
+		err     error
+	)
+
+	con := db.GetDBConnect()
+
+	result := con.Where(
+		"face_ids.image = ?",
+		faceId,
+	).First(&faceIds)
+	if result.Error != nil {
+		err = errors.New("error : table[face_ids] is not found.")
+	}
+
+	result = con.Where(
+		"app_users.id = ?",
+		faceIds.UserId,
+	).First(&user)
+	if result.Error != nil {
+		err = errors.New("error : table[app_users] is not found.")
+	}
+
+	return user, err
 }

@@ -8,7 +8,7 @@ import (
 	"errors"
 )
 
-func CreateToken(ctx context.Context, user table.AppUsers) (string, error) {
+func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, error) {
 	var (
 		token  string
 		tokens table.Tokens
@@ -32,6 +32,7 @@ func CreateToken(ctx context.Context, user table.AppUsers) (string, error) {
 			&table.Tokens{
 				UserId: user.Id,
 				Token:  token,
+				IsApp:  isApp,
 			},
 		)
 		if result.Error != nil {
@@ -45,6 +46,7 @@ func CreateToken(ctx context.Context, user table.AppUsers) (string, error) {
 			&table.Tokens{
 				UserId: user.Id,
 				Token:  token,
+				IsApp:  isApp,
 			},
 		)
 		if result.Error != nil {
@@ -63,8 +65,23 @@ func CreateUser(ctx context.Context, user table.AppUsers) (table.AppUsers, error
 	db := db.GetDBConnect()
 	result := db.Create(&user)
 	if result.Error != nil {
-		err = errors.New("error : table[app_users] is cannot create.")
+		err = errors.New("error : table[app_users] cannot create.")
 	}
 
 	return user, err
+}
+
+func CreateBoughtProducts(ctx context.Context, productIds []uint64, userId uint64) error {
+
+	for _, productId := range productIds {
+		result := db.GetDBConnect().Create(&table.BoughtProducts{
+			UserId:    userId,
+			ProductId: productId,
+		})
+		if result.Error != nil {
+			return errors.New("error : table[bought_products] cannot create.")
+		}
+	}
+
+	return nil
 }

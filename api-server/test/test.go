@@ -16,16 +16,26 @@ import (
 
 const (
 	host = "localhost:49200"
+	meca = "localhost:49201"
 )
 
 func main() {
+
 	conn, err := grpc.Dial(host, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalln("failrd connect: %s", err)
 	}
+
+	mconn, err := grpc.Dial(meca, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalln("failrd connect: %s", err)
+	}
+
 	defer conn.Close()
+	defer mconn.Close()
 
 	client := pb.NewWebAppServiceClient(conn)
+	mclient := pb.NewMechanicalServiceClient(mconn)
 
 	// タイムアウトを20秒に設定する
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*20)
@@ -41,6 +51,10 @@ func main() {
 		signup(ctx, client)
 	case "signin":
 		signin(ctx, client)
+	case "msignin":
+		msignin(ctx, mclient)
+	case "mpurchase":
+		mpurchase(ctx, mclient)
 	}
 }
 
@@ -115,4 +129,27 @@ func signin(ctx context.Context, client pb.WebAppServiceClient) {
 	}
 
 	log.Println(res.Token)
+}
+
+func msignin(ctx context.Context, client pb.MechanicalServiceClient) {
+	args := os.Args
+	res, err := client.SignIn(ctx, &messages.FaceAuthRequest{
+		Id: args[2],
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Print(res.Token)
+}
+
+func mpurchase(ctx context.Context, client pb.MechanicalServiceClient) {
+	args := os.Args
+	_, err := client.Purchase(ctx, &messages.PurchaseRequest{
+		Token: args[2],
+		Tag:   []string{"ABCDEFG", "HIJKLMN", "VWXYZ12"},
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }

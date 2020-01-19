@@ -96,7 +96,6 @@ CREATE TABLE bought_products
 (
     user_id          bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
-    date             Datetime DEFAULT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
     updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (user_id) 
@@ -124,6 +123,7 @@ CREATE TABLE tokens
     id              bigint unsigned AUTO_INCREMENT,
     user_id         bigint unsigned NOT NULL,
     token           text NOT NULL,
+    is_app          boolean NOT NULL DEFAULT TRUE,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
     updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (user_id) 

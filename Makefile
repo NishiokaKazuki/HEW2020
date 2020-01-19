@@ -49,5 +49,5 @@ docker-restart:
 	docker-compose stop &&\
 	docker-compose rm -f &&\
 	rm -rf mysql/data/* &&\
-	docker-compose up -d 
+	docker-compose up -d
 
