@@ -2,6 +2,7 @@ package table
 
 import (
 	"api-server/generated/enums"
+	"time"
 )
 
 type AppUsers struct {
@@ -49,6 +50,7 @@ type ProductStocks struct {
 type BoughtProducts struct {
 	UserId    uint64
 	ProductId uint64
+	CreatedAt time.Time
 }
 
 type FaceIds struct {

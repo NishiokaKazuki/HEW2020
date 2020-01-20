@@ -37,16 +37,26 @@ func FindProductsByCode(ctx context.Context, tags []string) ([]table.Products, e
 		products []table.Products
 	)
 
+	con := db.GormConnect()
+
 	for _, tag := range tags {
-		var product table.Products
-		result := db.GormConnect().Table(
-			"rfid_tags",
-		).Joins(
-			"inner join product_stocks on product_stocks.product_id = products.id",
-		).Where(
-			"product_stocks.store_id = ?",
+		var (
+			product  table.Products
+			rfidTags table.RfidTags
+		)
+
+		result := con.Where(
+			"rfid_tags.rfid_code = ?",
 			tag,
-		).Scan(&product)
+		).First(&rfidTags)
+		if result.Error != nil {
+			return nil, errors.New("error : table[rfid_tags] is not found.")
+		}
+
+		result = con.Where(
+			"products.id = ?",
+			rfidTags.ProductId,
+		).First(&product)
 		if result.Error != nil {
 			return nil, errors.New("error : table[products] is not found.")
 		}

@@ -98,7 +98,7 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 		user table.AppUsers
 	)
 
-	id, err := Auth(ctx, in.Token)
+	id, err := Auth(ctx, in.Token, true)
 	if err != nil {
 		return &messages.UserResponse{
 			Status:     false,
@@ -149,7 +149,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		products []*messages.StoreResponse_Product
 	)
 
-	_, err := Auth(ctx, in.Token)
+	_, err := Auth(ctx, in.Token, true)
 	if err != nil {
 		return &messages.StoreResponse{
 			Status:     false,
@@ -201,7 +201,7 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 	var (
 		product table.Products
 	)
-	_, err := Auth(ctx, in.Token)
+	_, err := Auth(ctx, in.Token, true)
 	if err != nil {
 		return &messages.ProductResponse{
 			Status:     false,

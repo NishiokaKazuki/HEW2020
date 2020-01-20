@@ -73,7 +73,7 @@ func GetAuthTokens(ctx context.Context, token string, isApp bool) (table.Tokens,
 	)
 
 	db.GetDBConnect().Where(
-		"tokens.token = ? AND is_app = ? AND tokens.updated_at > DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)",
+		"tokens.token = ? AND is_app = ? AND tokens.updated_at > DATE_SUB(current_timestamp(), INTERVAL 1 DAY)",
 		token,
 		isApp,
 	).First(&tokens)
@@ -98,7 +98,7 @@ func GetUserWithFaceId(ctx context.Context, faceId string) (table.AppUsers, erro
 		faceId,
 	).First(&faceIds)
 	if result.Error != nil {
-		err = errors.New("error : table[face_ids] is not found.")
+		return user, errors.New("error : table[face_ids] is not found.")
 	}
 
 	result = con.Where(

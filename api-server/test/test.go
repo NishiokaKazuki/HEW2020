@@ -55,6 +55,8 @@ func main() {
 		msignin(ctx, mclient)
 	case "mpurchase":
 		mpurchase(ctx, mclient)
+	case "msignout":
+		msignout(ctx, mclient)
 	}
 }
 
@@ -151,5 +153,16 @@ func mpurchase(ctx context.Context, client pb.MechanicalServiceClient) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("success")
+}
 
+func msignout(ctx context.Context, client pb.MechanicalServiceClient) {
+	args := os.Args
+	_, err := client.SignOut(ctx, &messages.SignOutRequest{
+		Token: args[2],
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("success")
 }

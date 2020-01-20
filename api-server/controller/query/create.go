@@ -17,8 +17,9 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 
 	db := db.GetDBConnect()
 	db.Where(
-		"tokens.user_id = ?",
+		"tokens.user_id = ? AND tokens.is_app = ?",
 		user.Id,
+		isApp,
 	).First(&tokens)
 
 	token = u.GetToken(user)
@@ -26,8 +27,9 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 		result := db.Table(
 			"tokens",
 		).Where(
-			"tokens.user_id = ?",
+			"tokens.user_id = ? AND tokens.is_app = ?",
 			user.Id,
+			isApp,
 		).Update(
 			&table.Tokens{
 				UserId: user.Id,
