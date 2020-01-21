@@ -57,6 +57,8 @@ func main() {
 		mpurchase(ctx, mclient)
 	case "msignout":
 		msignout(ctx, mclient)
+	case "history":
+		history(ctx, client)
 	}
 }
 
@@ -165,4 +167,23 @@ func msignout(ctx context.Context, client pb.MechanicalServiceClient) {
 		log.Fatal(err)
 	}
 	log.Println("success")
+}
+
+func history(ctx context.Context, client pb.WebAppServiceClient) {
+	args := os.Args
+	res, err := client.ClearingHistory(ctx, &messages.ClearingHistoryRequest{
+		Token: args[2],
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, history := range res.ClearingHistory {
+		log.Println(history.Date)
+		log.Println(history.Store.Id, history.Store.Address)
+		log.Println(history.Company.Id, history.Company.Name)
+		for _, p := range history.Products {
+			log.Println(p.Id, p.Name, p.Price)
+		}
+	}
 }

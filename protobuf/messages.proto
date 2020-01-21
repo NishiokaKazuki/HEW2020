@@ -116,14 +116,22 @@ message ClearingHistoryRequest {
 message ClearingHistoryResponse {
     bool status = 1;
     enums.StatusCodes status_code = 2;
-    uint32 pages = 3;
-    uint32 current_page = 4;
-    Clearing ClearingHistory = 5;
+    repeated Clearing ClearingHistory = 3;
 
     message Clearing {
-        uint32 total_amount = 1;
-        string date = 2;
-        Product products = 3;
+        string date = 1;
+        Store store = 2;
+        Company company = 3;
+        repeated Product products = 4;
+        message Store {
+            uint64 id = 1;
+            string image = 2;
+            string address = 3;
+        }
+        message Company {
+            uint64 id = 1;
+            string name = 2;
+        }
         message Product {
             uint64 id = 1;
             string name = 2;
@@ -138,7 +146,8 @@ message FaceAuthRequest {
 
 message PurchaseRequest {
     string token = 1;
-    repeated string tag = 2;
+    uint64 id    = 2;
+    repeated string tag = 3;
 }
 message PurchaseResponse {
     bool status = 1;

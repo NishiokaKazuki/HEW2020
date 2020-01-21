@@ -65,3 +65,38 @@ func FindProductsByCode(ctx context.Context, tags []string) ([]table.Products, e
 
 	return products, nil
 }
+
+func FindBoughtProduts(ctx context.Context, userId uint64) ([]join.BoughtProducts, error) {
+	var (
+		products []join.BoughtProducts
+		err      error
+	)
+
+	result := db.GormConnect().Table(
+		"bought_products",
+	).Select(
+		"bought_products.*, product_stocks.*, products.*, companies.*, stores.*",
+	).Order(
+		"bought_products.created_at desc",
+	).Order(
+		"bought_products.store_id",
+	).Order(
+		"bought_products.product_id",
+	).Joins(
+		"inner join stores on stores.id = bought_products.store_id",
+	).Joins(
+		"inner join companies on companies.id = stores.company_id",
+	).Joins(
+		"inner join products on products.id = bought_products.product_id",
+	).Joins(
+		"inner join product_stocks on product_stocks.product_id = bought_products.product_id",
+	).Where(
+		"bought_products.user_id = ?",
+		userId,
+	).Scan(&products)
+	if result.Error != nil {
+		err = errors.New("error : join[bought_products] is not found.")
+	}
+
+	return products, err
+}

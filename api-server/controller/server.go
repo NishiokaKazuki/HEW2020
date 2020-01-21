@@ -229,15 +229,61 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 
 func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHistoryRequest) (*messages.ClearingHistoryResponse, error) {
 	var (
-		history *messages.ClearingHistoryResponse_Clearing
+		history  []*messages.ClearingHistoryResponse_Clearing
+		hProduct *messages.ClearingHistoryResponse_Clearing_Product
+		date     string
+		storeId  uint64
 	)
+
+	id, err := Auth(ctx, in.Token, true)
+	if err != nil {
+		return &messages.ClearingHistoryResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, err
+	}
+
+	products, err := query.FindBoughtProduts(ctx, id)
+	if err != nil {
+		return &messages.ClearingHistoryResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, err
+	}
+
+	for _, product := range products {
+
+		hProduct = &messages.ClearingHistoryResponse_Clearing_Product{
+			Id:    product.Products.Id,
+			Name:  product.Products.Name,
+			Price: product.Products.Price,
+		}
+
+		// 購入店舗もしくは購入日が異なる場合
+		if date != product.BoughtProducts.CreatedAt.Format("2006/01/02") ||
+			storeId != product.Stores.Id {
+
+			date = product.BoughtProducts.CreatedAt.Format("2006/01/02")
+			storeId = product.Stores.Id
+			history = append(history, &messages.ClearingHistoryResponse_Clearing{
+				Date: date,
+				Store: &messages.ClearingHistoryResponse_Clearing_Store{
+					Id:      storeId,
+					Address: product.Stores.Address,
+				},
+				Company: &messages.ClearingHistoryResponse_Clearing_Company{
+					Id:   product.Companies.Id,
+					Name: product.Companies.Name,
+				},
+			})
+		}
+		history[len(history)-1].Products = append(history[len(history)-1].Products, hProduct)
+	}
 
 	return &messages.ClearingHistoryResponse{
 		Status:          true,
 		StatusCode:      enums.StatusCodes_SUCCESS,
 		ClearingHistory: history,
-		Pages:           1,
-		CurrentPage:     1,
 	}, nil
 }
 
@@ -250,7 +296,7 @@ func StartingServer(port string) {
 	s := grpc.NewServer()
 	pb.RegisterWebAppServiceServer(s, &server{})
 
-	log.Println("startingserver", port)
+	log.Println("starting server", port)
 	err = s.Serve(listenPort)
 	if err != nil {
 		log.Fatal("failed open", port)

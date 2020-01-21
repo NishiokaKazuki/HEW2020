@@ -73,12 +73,13 @@ func CreateUser(ctx context.Context, user table.AppUsers) (table.AppUsers, error
 	return user, err
 }
 
-func CreateBoughtProducts(ctx context.Context, productIds []uint64, userId uint64) error {
+func CreateBoughtProducts(ctx context.Context, productIds []uint64, userId, storeId uint64) error {
 
 	for _, productId := range productIds {
 		result := db.GetDBConnect().Create(&table.BoughtProducts{
 			UserId:    userId,
 			ProductId: productId,
+			StoreId:   storeId,
 		})
 		if result.Error != nil {
 			return errors.New("error : table[bought_products] cannot create.")

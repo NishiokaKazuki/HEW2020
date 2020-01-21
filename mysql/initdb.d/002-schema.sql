@@ -96,10 +96,13 @@ CREATE TABLE bought_products
 (
     user_id          bigint unsigned NOT NULL,
     product_id       bigint unsigned NOT NULL,
+    store_id         bigint unsigned NOT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
     updated_at       timestamp NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id),
+     FOREIGN KEY (store_id) 
+     REFERENCES stores(id),
     FOREIGN KEY (product_id) 
      REFERENCES products(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

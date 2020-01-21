@@ -50,6 +50,7 @@ type ProductStocks struct {
 type BoughtProducts struct {
 	UserId    uint64
 	ProductId uint64
+	StoreId   uint64
 	CreatedAt time.Time
 }
 
