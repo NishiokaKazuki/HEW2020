@@ -9,7 +9,7 @@ interface iState {
 
 const initialState: iState = {
     notificationOpen: false,
-    variant: '',
+    variant: 'success',
     message: ''
 }
 
