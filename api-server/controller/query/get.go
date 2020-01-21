@@ -2,6 +2,7 @@ package query
 
 import (
 	"api-server/model/db"
+	"api-server/model/join"
 	"api-server/model/table"
 	"context"
 	"errors"
@@ -13,8 +14,7 @@ func GetUser(ctx context.Context, id uint64) (table.AppUsers, error) {
 		err  error
 	)
 
-	db := db.GetDBConnect()
-	db.Where(
+	db.GetDBConnect().Where(
 		"id = ?",
 		id,
 	).First(&user)
@@ -25,21 +25,24 @@ func GetUser(ctx context.Context, id uint64) (table.AppUsers, error) {
 	return user, err
 }
 
-func GetStore(ctx context.Context, id uint64) (table.Stores, error) {
+func GetStore(ctx context.Context, id uint64) (join.Stores, error) {
 	var (
-		store table.Stores
+		store join.Stores
 		err   error
 	)
-	db := db.GetDBConnect()
 
-	db.Joins(
-		"inner join product_stocks on store.id = product_stocks.store_id",
-		"inner join products on product_stocks.store_id = products.id",
+	db.GetDBConnect().Table(
+		"stores",
+	).Select(
+		"stores.*, companies.*",
+	).Joins(
+		"inner join companies on companies.id = stores.company_id",
 	).Where(
-		"id = ?",
+		"stores.id = ?",
 		id,
-	).First(&store)
-	if store.Id != id {
+	).Scan(&store)
+
+	if store.Stores.Id != id {
 		err = errors.New("error : table[stores] is not found.")
 	}
 
@@ -51,16 +54,60 @@ func GetProduct(ctx context.Context, id uint64) (table.Products, error) {
 		product table.Products
 		err     error
 	)
-	db := db.GetDBConnect()
 
-	db.Where(
+	db.GetDBConnect().Where(
 		"id = ?",
 		id,
 	).First(&product)
-
 	if product.Id != id {
 		err = errors.New("error : table[products] is not found.")
 	}
 
 	return product, err
+}
+
+func GetAuthTokens(ctx context.Context, token string, isApp bool) (table.Tokens, error) {
+	var (
+		tokens table.Tokens
+		err    error
+	)
+
+	db.GetDBConnect().Where(
+		"tokens.token = ? AND is_app = ? AND tokens.updated_at > DATE_SUB(current_timestamp(), INTERVAL 1 DAY)",
+		token,
+		isApp,
+	).First(&tokens)
+	if tokens.Token != token {
+		err = errors.New("error : table[tokens] is not found.")
+	}
+
+	return tokens, err
+}
+
+func GetUserWithFaceId(ctx context.Context, faceId string) (table.AppUsers, error) {
+	var (
+		user    table.AppUsers
+		faceIds table.FaceIds
+		err     error
+	)
+
+	con := db.GetDBConnect()
+
+	result := con.Where(
+		"face_ids.image = ?",
+		faceId,
+	).First(&faceIds)
+	if result.Error != nil {
+		return user, errors.New("error : table[face_ids] is not found.")
+	}
+
+	result = con.Where(
+		"app_users.id = ?",
+		faceIds.UserId,
+	).First(&user)
+	if result.Error != nil {
+		err = errors.New("error : table[app_users] is not found.")
+	}
+
+	return user, err
 }

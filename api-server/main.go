@@ -6,13 +6,19 @@ import (
 )
 
 const (
-	port = ":49200"
+	port1 = ":49200"
+	port2 = ":49201"
 )
 
 func main() {
 	db := db.GormConnect()
 	defer db.Close()
 
-	controller.StartingServer(port)
+	finish := make(chan bool)
+
+	go controller.StartingServer(port1)
+	go controller.StartingMachaServer(port2)
+
+	<-finish
 
 }

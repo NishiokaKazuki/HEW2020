@@ -1,8 +1,8 @@
 package db
 
 import (
-	"fmt"
 	"api-server/configs"
+	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -30,7 +30,7 @@ func GetDBConfig() (string, string) {
 		panic(err.Error())
 	}
 
-	CONNECT := conf.User + ":" + conf.Pass + "@" + conf.Protocol + "/" + conf.Dbname
+	CONNECT := conf.User + ":" + conf.Pass + "@" + conf.Protocol + "/" + conf.Dbname + "?parseTime=true"
 
 	return conf.Dbms, CONNECT
 }

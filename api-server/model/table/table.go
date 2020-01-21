@@ -50,10 +50,18 @@ type ProductStocks struct {
 type BoughtProducts struct {
 	UserId    uint64
 	ProductId uint64
-	Date      time.Time
+	StoreId   uint64
+	CreatedAt time.Time
 }
 
 type FaceIds struct {
 	UserId uint64
 	Image  string
+}
+
+type Tokens struct {
+	Id     uint64
+	UserId uint64
+	Token  string
+	IsApp  bool
 }

@@ -21,7 +21,7 @@ INSERT INTO stores(company_id, image, address, disabled) VALUES
 
 INSERT INTO products(name, image, price, type, disabled) VALUES
     ('コーラ', 'image1', 150, 1, 0),
-    ('あやたか', 'image2', 130, 1, 1),
+    ('あやたか', 'image2', 130, 1, 0),
     ('ポテチ', 'image3', 100, 2, 0),
     ('おにぎり', 'image4', 1000, 2, 0);
 
@@ -39,23 +39,23 @@ INSERT INTO product_stocks(store_id, product_id, stock) VALUES
     (1, 4, 0),
     (4, 3, 30);
 
-INSERT INTO bought_products(user_id, product_id, date) VALUES
-    (1, 2, '2019-11-24'),
-    (1, 4, '2019-11-24'),
-    (1, 1, '2019-11-24'),
-    (1, 4, '2019-11-24'),
-    (1, 3, '2019-12-25'),
-    (1, 1, '2019-12-25'),
-    (1, 1, '2019-12-25'),
-    (1, 2, '2019-12-25'),
-    (2, 3, '2019-12-31'),
-    (2, 2, '2019-12-31'),
-    (7, 4, '2019-12-25'),
-    (7, 4, '2019-12-25'),
-    (7, 4, '2019-12-25'),
-    (7, 4, '2019-12-25'),
-    (7, 4, '2019-12-25'),
-    (7, 4, '2019-12-25');
+INSERT INTO bought_products(user_id, product_id, store_id) VALUES
+    (1, 2, 1),
+    (1, 4, 2),
+    (1, 1, 2),
+    (1, 4, 3),
+    (1, 3, 3),
+    (1, 1, 3),
+    (1, 1, 4),
+    (1, 2, 4),
+    (2, 3, 3),
+    (2, 2, 3),
+    (7, 4, 4),
+    (7, 4, 4),
+    (7, 4, 4),
+    (7, 4, 4),
+    (7, 4, 2),
+    (7, 4, 2);
 
 INSERT INTO face_ids(user_id, image) VALUES
     (1, 'test1'),
