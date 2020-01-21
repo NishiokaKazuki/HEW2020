@@ -13,4 +13,4 @@ class User {
     }
 }
 
-export default new User
+export default new User()
