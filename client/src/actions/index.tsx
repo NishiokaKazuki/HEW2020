@@ -52,7 +52,7 @@ export const jwtLogin = (loginProps: iLoginProps) => {
 export const jwtLogout = () => {
     return async (dispatch: Dispatch<Action>) => {
         // TODO: gRpcログアウト && try-catch
-        dispatch({ type: actionTypes.START_REQUEST })
+        dispatch({ type: actionTypes.START_REQUEST　})
 
         console.log('Logout')
         localStorage.removeItem('token')
