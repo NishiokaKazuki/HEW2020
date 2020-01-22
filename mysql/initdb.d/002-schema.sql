@@ -25,7 +25,7 @@ CREATE TABLE companies
     name             text,
     disabled         boolean DEFAULT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -39,7 +39,7 @@ CREATE TABLE stores
     address          text,
     disabled         boolean DEFAULT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (company_id) 
     REFERENCES companies(id),
     PRIMARY KEY (id)
@@ -56,7 +56,7 @@ CREATE TABLE products
     type             int unsigned NOT NULL,
     disabled         boolean DEFAULT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
    PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -69,7 +69,7 @@ CREATE TABLE rfid_tags
     rfid_code        text NOT NULL,
     sold             boolean DEFAULT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (product_id) 
      REFERENCES products(id),
     PRIMARY KEY (id)
@@ -83,7 +83,7 @@ CREATE TABLE product_stocks
     product_id       bigint unsigned NOT NULL,
     stock            int    unsigned,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (store_id) 
      REFERENCES stores(id),
     FOREIGN KEY (product_id) 
@@ -98,7 +98,7 @@ CREATE TABLE bought_products
     product_id       bigint unsigned NOT NULL,
     store_id         bigint unsigned NOT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id),
      FOREIGN KEY (store_id) 
@@ -114,7 +114,7 @@ CREATE TABLE face_ids
     user_id          bigint unsigned NOT NULL,
     image            text NOT NULL,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -128,7 +128,7 @@ CREATE TABLE tokens
     token           text NOT NULL,
     is_app          boolean NOT NULL DEFAULT TRUE,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (user_id) 
      REFERENCES app_users(id),
     PRIMARY KEY (id)
