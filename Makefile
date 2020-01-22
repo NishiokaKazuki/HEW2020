@@ -3,9 +3,9 @@ run-api-server:
 	cd api-server &&\
 	go run main.go
 
-run-mecha:
+run-py:
 	cd mechanical &&\
-	python main.py
+	python2 main.py
 
 protoc-server:
 	protoc -I protobuf/ protobuf/enums.proto --go_out=plugins=grpc:./
@@ -13,10 +13,10 @@ protoc-server:
 	protoc -I protobuf/ protobuf/web_app_service.proto --go_out=plugins=grpc:./
 	protoc -I protobuf/ protobuf/mechanical_service.proto --go_out=plugins=grpc:./
 
-protoc-mecha:
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/enums --grpc_python_out=./mechanical/generated/enums protobuf/enums.proto
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/messages --grpc_python_out=./mechanical/generated/messages protobuf/messages.proto
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/services --grpc_python_out=./mechanical/generated/services protobuf/mechanical_service.proto
+protoc-py:
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/enums.proto
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/messages.proto
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/mechanical_service.proto
 
 docker-up:
 	cd docker &&\
