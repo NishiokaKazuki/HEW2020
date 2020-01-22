@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package services;
+option go_package = "api-server/generated/services";
+
+import "messages.proto";
+
+service MechanicalService {
+    rpc SignIn (messages.FaceAuthRequest) returns (messages.AuthResponse) {}
+    rpc Purchase (messages.PurchaseRequest) returns (messages.PurchaseResponse) {}
+    rpc SignOut (messages.SignOutRequest) returns (messages.AuthResponse) {}
+}
