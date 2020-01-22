@@ -3,7 +3,7 @@ import axios from 'axios'
 /* TODO:
 https://maps.googleapis.com/maps/api/place/textsearch/json?
 query=%E3%82%B3%E3%83%B3%E3%83%93%E3%83%8B&location=43.059856,141.34308&radius=10000
-&key=AIzaSyD5Z2K-JgM-o-rH2KzW4WwS85HOm2nuil0
+&key=*****
 */
 
 const keyword: string = 'コンビニ'
