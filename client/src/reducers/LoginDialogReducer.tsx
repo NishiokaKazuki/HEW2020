@@ -6,15 +6,15 @@ type Actions = (
     | ReturnType<typeof actions.closeLoginDialog>
 )
 
-interface AppState {
+interface iState {
     loginDialogOpen: boolean
 }
 
-const initialState: AppState = {
+const initialState: iState = {
     loginDialogOpen: false,
 }
 
-const LoginDialogReducer = (state: AppState = initialState, action: Actions) => {
+const LoginDialogReducer = (state: iState = initialState, action: Actions) => {
     switch (action.type) {
         case actionTypes.OPEN_LOGIN_DIALOG:
             return {

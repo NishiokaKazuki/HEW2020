@@ -1,29 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
 } from "react-router-dom"
+
+import * as actionTypes from './utils/actionTypes'
+
 import styled from 'styled-components'
 
 import {
     createMuiTheme,
     ThemeProvider
 } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
 
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import reducers from './reducers'
-
-import ScrollToTop from './components/ScrollToTop'
-import Header from './components/Header'
-import Login from './components/Login'
-import Top from './components/Top'
-import MyPage from './components/MyPage'
-import Signup from './components/Signup'
-import About from './components/About'
+import ScrollToTop from './components/wrapper/ScrollToTop'
+import Auth from './components/wrapper/Auth'
+import Loading from './containers/Loading'
+import Notification from './containers/Notification'
+import Header from './containers/Header'
+import Login from './containers/Login'
+import Top from './containers/Top'
+import MyPage from './containers/MyPage'
+import Signup from './containers/Signup'
+import About from './containers/About'
+import History from './containers/History'
+import Search from './containers/Search'
 
 export const theme = createMuiTheme({
     palette: {
@@ -38,45 +42,54 @@ export const theme = createMuiTheme({
     },
 })
 
-const store = createStore(
-    reducers,
-    applyMiddleware(thunk),
-)
-
 const App: React.FC = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (localStorage.getItem('token'))
+            dispatch({ type: actionTypes.AUTHENTICATE_USER })
+    })
+
     return (
         <>
-            <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <Router>
                         <ScrollToTop />
+                        <Loading />
                         <Header />
+                        <Notification />
                         <Login />
                         <Main>
-                            <RenderRoute />
+                            <Switch>
+                                <Route exact path="/"><Top /></Route>
+                                <Route exact path="/signup"><Signup /></Route>
+                                <Route exact path="/about"><About /></Route>
+                                <Auth>
+                                    <AuthRoute />
+                                </Auth>
+                            </Switch>
                         </Main>
                     </Router>
                 </ThemeProvider>
-            </Provider>
         </>
     )
 }
 
-const RenderRoute: React.FC = () => {
+const AuthRoute: React.FC = () => {
     return (
         <Switch>
-            <Route exact path="/"><Top /></Route>
             <Route exact path="/mypage"><MyPage /></Route>
-            <Route exact path="/signup"><Signup /></Route>
-            <Route exact path="/about"><About /></Route>
+            <Route exact path="/history"><History /></Route>
+            <Route exact path="/search"><Search /></Route>
         </Switch>
     )
 }
 
 const Main = styled.main`
-    width: 500px
-    margin: 0 auto
-    background-color: red
+    width: 500px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: #ddd;
 `
 
 export default App

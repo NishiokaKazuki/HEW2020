@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useDispatch } from 'react-redux'
+
+import * as actions from '../../actions'
+
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogTitle from '@material-ui/core/DialogTitle'
@@ -38,9 +42,11 @@ interface Props {
 const ShareDialog: React.FC<Props> = props => {
     const { open, onClose } = props
 
+    const dispatch = useDispatch()
+
     // シェアボタン用
     const title: string = "自動販売機"
-    const shareUrl: string = ""
+    const shareUrl: string = "自動販売機"
     const hashTag: string[] = ['自動販売機', 'ロボット学科', '043教室', 'HEW2020', 'ロボラボ']
 
     return (
@@ -114,7 +120,7 @@ const ShareDialog: React.FC<Props> = props => {
             <StyledDialogContent>
                 <CopyToClipboard
                     text={shareUrl}
-                    onCopy={() => {}}
+                    onCopy={() => { dispatch(actions.setNotification('success', 'クリップボードに保存しました。')) }}
                 >
                     <Button
                         variant="contained"
@@ -159,14 +165,14 @@ const Share: React.FC = () => {
 }
 
 const StyledShareIcon = styled(ShareIcon)`
-    color: white
+    color: white;
 `
 
 const StyledDialogContent = styled(DialogContent)`
-    display: flex
-    justify-content: space-around
-    text-align: center
-    padding: 10px
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px;
 `
 
 export default Share

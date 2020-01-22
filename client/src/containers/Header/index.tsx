@@ -31,9 +31,9 @@ const Header: React.FC = () => {
 }
 
 const StyledLink = styled(Link)`
-    margin: auto
-    text-decoration: none
-    color: white
+    margin: auto;
+    text-decoration: none;
+    color: white;
 `
 
 const useStyles = makeStyles(theme => ({
