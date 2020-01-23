@@ -87,6 +87,7 @@ const AuthRoute: React.FC = () => {
 
 const Main = styled.main`
     width: 500px;
+    max-width: 100vw;
     min-height: 100vh;
     margin: 0 auto;
     background-color: #ddd;
