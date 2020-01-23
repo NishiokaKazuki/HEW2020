@@ -10,12 +10,12 @@ HEW2020 で開発する `顔認証型自動機コンビニ` のWeb Application. 
   - TypeScript
 
 ## Directory
-- api-server
+- server
     - `Go`で実装したAPI。
 - client
-    - `React`で実装したUI。
-- docker 
-    - `docker-compose`を格納。
+    - `React`+`TypeScript`で実装したUI。
+- proxy
+    - `envoy`の設定ファイル。
 - mysql
     - DBで使用する`SQL`を格納。
 - protobuf
@@ -24,7 +24,7 @@ HEW2020 で開発する `顔認証型自動機コンビニ` のWeb Application. 
 ## Usage
 **Run API server :**
 ```
-cd api-server &&\
+cd server &&\
 go run main.go
 ```
 **Run React App :**
