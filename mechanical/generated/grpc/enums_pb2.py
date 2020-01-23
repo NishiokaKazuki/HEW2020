@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='enums.proto',
   package='enums',
   syntax='proto3',
-  serialized_options=_b('Z\032api-server/generated/enums'),
+  serialized_options=_b('Z\032server/generated/enums'),
   serialized_pb=_b('\n\x0b\x65nums.proto\x12\x05\x65nums*7\n\x0bStatusCodes\x12\n\n\x06\x46\x41ILED\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x0f\n\x0b\x46\x41ILED_AUTH\x10\x02*5\n\x08SexTypes\x12\x0b\n\x07SEX_ALL\x10\x00\x12\x0c\n\x08SEX_MALE\x10\x01\x12\x0e\n\nSEX_FEMALE\x10\x02*W\n\x0cProductTypes\x12\x0f\n\x0bPRODUCT_ALL\x10\x00\x12\x11\n\rPRODUCT_DRINK\x10\x01\x12\x10\n\x0cPRODUCT_FOOD\x10\x02\x12\x11\n\rPRODUCT_OTHER\x10\x03*^\n\x13StoreSearchCriteria\x12\x0e\n\nSTORES_ALL\x10\x00\x12\x12\n\x0eSTORES_ADDRESS\x10\x01\x12\x12\n\x0eSTORES_COMPANY\x10\x02\x12\x0f\n\x0bSTORES_NEAR\x10\x03\x42\x1cZ\x1a\x61pi-server/generated/enumsb\x06proto3')
 )
 

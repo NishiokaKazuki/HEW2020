@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='mechanical_service.proto',
   package='services',
   syntax='proto3',
-  serialized_options=_b('Z\035api-server/generated/services'),
+  serialized_options=_b('Z\035server/generated/services'),
   serialized_pb=_b('\n\x18mechanical_service.proto\x12\x08services\x1a\x0emessages.proto2\xd6\x01\n\x11MechanicalService\x12=\n\x06SignIn\x12\x19.messages.FaceAuthRequest\x1a\x16.messages.AuthResponse\"\x00\x12\x43\n\x08Purchase\x12\x19.messages.PurchaseRequest\x1a\x1a.messages.PurchaseResponse\"\x00\x12=\n\x07SignOut\x12\x18.messages.SignOutRequest\x1a\x16.messages.AuthResponse\"\x00\x42\x1fZ\x1d\x61pi-server/generated/servicesb\x06proto3')
   ,
   dependencies=[messages__pb2.DESCRIPTOR,])
