@@ -1,4 +1,5 @@
 class User {
+    // ログインチェック
     isLoggedIn = () => this.get('token') ? true : false;
 
     set = (key: string, value: string) => localStorage.setItem(key, value)
