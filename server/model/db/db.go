@@ -1,7 +1,7 @@
 package db
 
 import (
-	"api-server/configs"
+	"server/configs"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

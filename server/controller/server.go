@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"api-server/controller/query"
-	"api-server/controller/utils"
-	"api-server/generated/enums"
-	"api-server/generated/messages"
-	pb "api-server/generated/services"
-	"api-server/model/table"
+	"server/controller/query"
+	"server/controller/utils"
+	"server/generated/enums"
+	"server/generated/messages"
+	pb "server/generated/services"
+	"server/model/table"
 	"context"
 	"log"
 	"net"

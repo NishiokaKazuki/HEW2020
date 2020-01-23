@@ -1,9 +1,9 @@
 package query
 
 import (
-	u "api-server/controller/utils"
-	"api-server/model/db"
-	"api-server/model/table"
+	u "server/controller/utils"
+	"server/model/db"
+	"server/model/table"
 	"context"
 	"errors"
 )

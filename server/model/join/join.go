@@ -1,6 +1,6 @@
 package join
 
-import "api-server/model/table"
+import "server/model/table"
 
 type Stores struct {
 	table.Stores

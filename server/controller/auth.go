@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"api-server/controller/query"
-	"api-server/controller/utils"
-	"api-server/model/db"
-	"api-server/model/table"
+	"server/controller/query"
+	"server/controller/utils"
+	"server/model/db"
+	"server/model/table"
 	"context"
 	"errors"
 )

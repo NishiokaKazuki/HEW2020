@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"api-server/model/table"
+	"server/model/table"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"

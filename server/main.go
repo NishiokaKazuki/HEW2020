@@ -1,8 +1,8 @@
 package main
 
 import (
-	"api-server/controller"
-	"api-server/model/db"
+	"server/controller"
+	"server/model/db"
 )
 
 const (

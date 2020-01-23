@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"api-server/generated/enums"
-	"api-server/generated/messages"
-	pb "api-server/generated/services"
+	"server/generated/enums"
+	"server/generated/messages"
+	pb "server/generated/services"
 
 	"google.golang.org/grpc"
 )

@@ -1,8 +1,8 @@
 package query
 
 import (
-	"api-server/model/db"
-	"api-server/model/table"
+	"server/model/db"
+	"server/model/table"
 	"context"
 	"errors"
 )

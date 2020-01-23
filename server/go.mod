@@ -1,4 +1,4 @@
-module api-server
+module server
 
 go 1.12
 
