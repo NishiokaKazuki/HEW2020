@@ -27,7 +27,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: hew2020_db
+    container_name: hew2020-db
     restart: always
     volumes:
       - ../mysql/data:/var/lib/mysql
