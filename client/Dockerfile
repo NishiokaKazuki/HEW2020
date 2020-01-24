@@ -1,6 +1,6 @@
 FROM  node:10.12.0-slim
 
-WORKDIR /client
+WORKDIR /HEW2020/client
 COPY . .
 RUN yarn install
 CMD ["yarn", "start"]
