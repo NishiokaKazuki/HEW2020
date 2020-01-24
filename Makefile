@@ -1,11 +1,6 @@
-
-run-server:
-	cd server &&\
-	go run main.go
-
-run-py:
-	cd mechanical &&\
-	python2 main.py
+protoc-client:
+	cd client &&\
+	sh protoc.sh
 
 protoc-server:
 	protoc -I protobuf/ protobuf/enums.proto --go_out=plugins=grpc:./
@@ -29,17 +24,36 @@ docker-stop:
 	docker-compose stop
 
 docker-rm:
-	docker-compose rm -f
+	docker-compose rm -f &&\
 	rm -rf mysql/data/*
 
 docker-ps:
 	docker-compose ps
 
-docker-exec:
-	docker exec -it hew bash
+docker-exec-db:
+	docker exec -it hew2020-db bin/bash
+
+docker-exec-client:
+	docker exec -it hew2020-client /bin/bash
+
+docker-exec-server:
+	docker exec -it hew2020-server /bin/bash
 
 docker-restart:
 	docker-compose stop &&\
 	docker-compose rm -f &&\
 	rm -rf mysql/data/* &&\
 	docker-compose up -d
+
+run-client:
+	cd client &&\
+	yarn install &&\
+	yarn start
+
+run-server:
+	cd server &&\
+	go run main.go
+
+run-py:
+	cd mechanical &&\
+	python2 main.py
