@@ -1,47 +1,62 @@
 # Project HEW2020
-`顔認証型自動機コンビニ` の Web Application
+HEW2020で開発する`無人コンビニ` の Web Application.
 
 ## Description
-HEW2020 で開発する `顔認証型自動機コンビニ` のWeb Application. コンビニと連携したユーザ情報や店舗情報などが閲覧可能.
-- Backend
-  - Go
-- Frontend
-  - React
-  - TypeScript
-
-## Directory
-- server
-    - `Go`で実装したAPI。
-- client
-    - `React`+`TypeScript`で実装したUI。
-- proxy
-    - `envoy`の設定ファイル。
-- mysql
-    - DBで使用する`SQL`を格納。
-- protobuf
-    - gRPCの通信内容を`Protocol Buffers`で定義。
-
-## Usage
-**Run API server :**
-```
-cd server &&\
-go run main.go
-```
-**Run React App :**
-```
-cd client &&\
-yarn start
-```
+HEW2020 で開発する `無人コンビニ` のWeb Application. No checkouts のコンビニと連携して、ユーザ情報や店舗情報などを閲覧可能にする.
 
 ## Install
 ```Git
 git clone https://github.com/NishiokaKazuki/HEW2020.git
 ```
 
+## Usage
+*Protocol Buffersから各言語のソースを生成*
+```Makefile
+make protoc-client &&\
+make protoc-server &&\
+make protoc-py
+```
+DBの初期化
+```Makefile
+make docker-init-db
+```
+*Containerの起動*
+```Makefile
+make docker-up
+```
+
+## Technologies
+- Frontend
+  - React
+  - TypeScript
+- Backend
+  - Go
+- Infrastructure
+  - Python
+  - AWS
+  - Kubernetes
+- Others
+  - gRPC
+  - Envoy Proxy
+
+## Directory
+- client
+    - `React`+`TypeScript`のUI
+- server
+    - `Go`のAPI Server
+- mechanical
+    - `Python`の組み込み
+- proxy
+    - `Envoy Proxy`の設定ファイル
+- mysql
+    - MySQLの`SQL`
+- protobuf
+    - gRPCの通信内容を定義した`Protocol Buffers`
+
 ## Author
 - Backend
-  - [@kazuking_93](https://twitter.com/kazuking_93)
-- Frontend + AWS
+    - [@kazuking_93](https://twitter.com/kazuking_93)
+- Frontend
     - [@KHiroki86_](https://twitter.com/KHiroki86_)
 
 ## License
