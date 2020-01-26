@@ -1,1 +1,2 @@
-data/
+/data/*
+!/data/hew2020
