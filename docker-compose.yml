@@ -3,6 +3,8 @@ version: "3"
 services:
   proxy:
     build: ./proxy
+    volumes:
+      - ./proxy:/HEW2020/proxy
     ports:
       - "8080:8080"
     links:
@@ -27,12 +29,11 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: hew2020-db
     restart: always
     volumes:
-      - ../mysql/data:/var/lib/mysql
-      - ../mysql/conf:/etc/mysql/conf.d
-      - ../mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: hew2020
@@ -41,3 +42,4 @@ services:
       # TZ: 'Asia/Tokyo'
     ports:
       - "13306:3306"
+    container_name: hew2020-db

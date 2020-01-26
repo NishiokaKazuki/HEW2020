@@ -17,8 +17,8 @@ docker-up:
 	docker-compose up -d
 
 docker-init-db:
-	docker-compose exec db bash -psecret -c "chmod 0775 docker-entrypoint-initdb.d/init-db.sh" &&\
-	docker-compose exec db bash -psecret -c "sh ./docker-entrypoint-initdb.d/init-db.sh"
+	docker-compose exec db /bin/bash -psecret -c "chmod 0775 docker-entrypoint-initdb.d/init-db.sh" &&\
+	docker-compose exec db /bin/bash -psecret -c "sh ./docker-entrypoint-initdb.d/init-db.sh"
 
 docker-stop:
 	docker-compose stop
@@ -31,7 +31,7 @@ docker-ps:
 	docker-compose ps
 
 docker-exec-db:
-	docker exec -it hew2020-db bin/bash
+	docker exec -it hew2020-db /bin/bash
 
 docker-exec-client:
 	docker exec -it hew2020-client /bin/bash
