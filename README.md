@@ -16,13 +16,13 @@ make protoc-client &&\
 make protoc-server &&\
 make protoc-py
 ```
-DBの初期化
-```Makefile
-make docker-init-db
-```
 *Containerの起動*
 ```Makefile
 make docker-up
+```
+DBの初期化
+```Makefile
+make docker-init-db
 ```
 
 ## Technologies
