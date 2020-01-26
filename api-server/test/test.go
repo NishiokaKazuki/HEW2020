@@ -102,24 +102,24 @@ func user(ctx context.Context, client pb.WebAppServiceClient) {
 
 func signup(ctx context.Context, client pb.WebAppServiceClient) {
 	_, err := client.SignUp(ctx, &messages.SignUpRequest{
-		Name:   "NewAccount",
+		Name:   "NewAccount2",
 		Sex:    enums.SexTypes_SEX_MALE,
 		Age:    18,
-		UserId: "NewAccount",
-		UserPw: "pass_1",
+		UserId: "NewAccount2",
+		UserPw: "pass_2",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	res, err := client.User(ctx, &messages.UserRequest{
-		Token: "test",
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+	// res, err := client.User(ctx, &messages.UserRequest{
+	// 	Token: "test",
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	log.Println(res)
+	// log.Println(res)
 }
 
 func signin(ctx context.Context, client pb.WebAppServiceClient) {
