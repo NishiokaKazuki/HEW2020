@@ -10,9 +10,9 @@ CREATE TABLE app_users
     age              int unsigned,
     sign_id          VARCHAR(255) unique NOT NULL,
     sign_pw          VARCHAR(255) NOT NULL,
-    disabled         boolean DEFAULT NULL,
+    disabled         boolean DEFAULT false,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp,
+    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     PRIMARY KEY (id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
