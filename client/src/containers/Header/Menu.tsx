@@ -1,4 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
+
+import { useSelector, useDispatch } from "react-redux"
+import * as actionTypes from "../../utils/actionTypes"
 
 import DrawerItems from "./DrawerItems"
 
@@ -8,13 +12,20 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Divider from '@material-ui/core/Divider'
 import Hidden from '@material-ui/core/Hidden'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+
+import User from '../../class/User'
 
 const Menu: React.FC = () => {
     const classes = useStyles()
-    const [open, setOpen] = React.useState(false)
+    const dispatch = useDispatch()
+    const drawerOpen = useSelector((state: any) => state.DrawerReducer.drawerOpen)
+    const userName = useSelector((state: any) => state.UserReducer.name)
 
     const handleDrawerToggle = () => {
-        setOpen(!open)
+        dispatch({ type: actionTypes.TOGGLE_DRAWER })
     }
 
     return (
@@ -33,7 +44,7 @@ const Menu: React.FC = () => {
                     <Drawer
                         variant="temporary"
                         anchor="left"
-                        open={open}
+                        open={drawerOpen}
                         onClose={handleDrawerToggle}
                         ModalProps={{
                             keepMounted: true, // Better open performance on mobile.
@@ -42,7 +53,7 @@ const Menu: React.FC = () => {
                             paper: classes.drawerPaper,
                         }}
                     >
-                        <div className={classes.toolbar} />
+                        <StyledList><ListItem><StyledText>{User.get('token') ? userName + "様" : "ゲスト様"}</StyledText></ListItem></StyledList>
                         <Divider />
                         <DrawerItems />
                     </Drawer>
@@ -58,5 +69,13 @@ const useStyles = makeStyles(theme => ({
         width: '70%'
     }
 }))
+
+const StyledList = styled(List)`
+    background-color: #ddd;
+`
+
+const StyledText = styled(ListItemText)`
+    text-align: center;
+`
 
 export default Menu
