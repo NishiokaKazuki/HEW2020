@@ -38,7 +38,7 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 			},
 		)
 		if result.Error != nil {
-			err = errors.New("error : table[app_users] is not found.")
+			err = errors.New("Not Found")
 		}
 
 	} else {

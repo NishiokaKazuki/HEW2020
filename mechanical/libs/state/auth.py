@@ -19,6 +19,7 @@ class MainStateAuth(object):
 
     def Auth(self, id):
         res = self.stub.SignIn(messages_pb2.FaceAuthRequest(id = id))
+        print(res)
         # 認証失敗
         if res.status != True:
             utils.OutStatusCode(res.statuscode)
