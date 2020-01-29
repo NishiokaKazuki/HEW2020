@@ -51,6 +51,7 @@ const Search: React.FC = () => {
             lat={lat}
             lng={lng}
           />
+          {/* <Pin>とshopをmap()で回す */}
         </GoogleMapReact>
       </GoogleMapWrapper>
     </Root>

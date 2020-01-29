@@ -10,8 +10,6 @@ const MyPage: React.FC = () => {
     <Root>
       <div className={classes.toolbar} />
       <h1>MyPage</h1>
-      <h1>MyPage</h1>
-      <h1>MyPage</h1>
     </Root>
   )
 }
