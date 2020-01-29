@@ -2,8 +2,6 @@ import User, { iLogin, iSignup } from "../class/User"
 import { Dispatch } from "react"
 import { Action } from "redux"
 import * as actionTypes from "../utils/actionTypes"
-import { WebAppServiceClient } from "../proto/web_app_service_pb_service"
-import { UserRequest } from "../proto/messages_pb"
 
 export interface Actions {
     type: String,
@@ -73,8 +71,10 @@ export const jwtLogin = (loginProps: iLogin) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
 
+            // TODO: レスポンスにユーザーも返してもらう
             User.loginRequest(loginProps)
             await User.userRequest(User.get('token'))
+
 
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
             dispatch({ type: actionTypes.CLOSE_LOGIN_DIALOG })
@@ -126,5 +126,44 @@ export const setUser = (id: string, name: string, sex: string, age: number) => (
         name: name,
         sex: sex,
         age: age
+    }
+})
+
+// 購入履歴
+export interface iStore {
+    id: number,
+    image: string,
+    address: string
+}
+export interface iCompany {
+    id: number,
+    name: string
+}
+export type Product = {
+    id: number,
+    name: string,
+    price: number
+}
+
+export const getHistory = (token: any) => {
+    return async (dispatch: Dispatch<Action>) => {
+        try {
+            dispatch({ type: actionTypes.START_REQUEST })
+
+            const histories: any = await User.historyRequest(token)
+            console.log(histories)
+            dispatch(setHistory(histories))
+
+            dispatch({ type: actionTypes.COMPLETE_REQUEST })
+        } catch (e) {
+            dispatch({ type: actionTypes.COMPLETE_REQUEST })
+            dispatch(setNotification('error', 'エラーが発生しました！'))
+        }
+    }
+}
+export const setHistory = (histories: any) => ({
+    type: actionTypes.SET_HISTORY,
+    payload: {
+        histories: histories
     }
 })

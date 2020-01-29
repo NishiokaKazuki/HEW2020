@@ -52,6 +52,7 @@ const App: React.FC = () => {
         const token = User.get('token')
         if (token) {
             dispatch(actions.getUser(token))
+            dispatch(actions.getHistory(token))
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
         }
     })

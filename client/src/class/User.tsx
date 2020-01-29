@@ -3,6 +3,7 @@ import { SignUpRequest } from "../proto/messages_pb"
 import { SignInRequest } from "../proto/messages_pb"
 import { SignOutRequest } from "../proto/messages_pb"
 import { UserRequest } from "../proto/messages_pb"
+import { ClearingHistoryRequest } from "../proto/messages_pb"
 import * as actions from "../actions"
 
 export enum SexTypes {
@@ -131,6 +132,60 @@ class User {
                     age: res.getUser().getAge()
                 }
                 resolve(ret)
+            })
+        })
+    }
+
+    /**
+     * 購入履歴
+     *
+     * @param {any} token
+     * @return 購入履歴
+     */
+    public historyRequest = (token: any) => {
+        return new Promise(resolve => {
+            var ret: any
+            const req = new ClearingHistoryRequest()
+            req.setToken(token)
+
+            const client = new WebAppServiceClient("http://localhost:8080", {})
+            client.clearingHistory(req, (err: any, res: any) => {
+                if (err || res === null) {
+                    throw err
+                }
+
+                // 購入履歴の取得
+                const clearingHistories = res.getClearinghistoryList()
+
+                // 購入商品の取得
+                let products: any;
+                for (let i = 0; i < clearingHistories.length; i++) {
+                    products = clearingHistories[i].getProductsList()
+                }
+
+                // 返却値の生成
+                let histories = new Array(clearingHistories.length)
+                for (let i = 0; i < clearingHistories.length; i++) {
+                    histories[i] = {
+                        date: clearingHistories[i].getDate(),
+                        store: {
+                            id: clearingHistories[i].getStore().getId(),
+                            image: clearingHistories[i].getStore().getImage(),
+                            address: clearingHistories[i].getStore().getAddress()
+                        },
+                        company: {
+                            id: clearingHistories[i].getCompany().getId(),
+                            name: clearingHistories[i].getCompany().getName()
+                        },
+                        product: {
+                            id: products[0].getId(),
+                            name: products[0].getName(),
+                            price: products[0].getPrice()
+                        }
+                    }
+                }
+
+                resolve(histories)
             })
         })
     }

@@ -24,3 +24,7 @@ export const COMPLETE_REQUEST = 'COMPLETE_REQUEST'
 // ユーザ取得
 export const GET_USER = 'GET_USER'
 export const SET_USER = 'SET_USER'
+
+// 購入履歴
+export const GET_HISTORY = 'GET_HISTORY'
+export const SET_HISTORY = 'SET_HISTORY'
