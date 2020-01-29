@@ -90,7 +90,6 @@ export const jwtLogout = (token: any) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
-
             await User.logoutRequest(token)
 
             dispatch({ type: actionTypes.UNAUTHENTICATE_USER })

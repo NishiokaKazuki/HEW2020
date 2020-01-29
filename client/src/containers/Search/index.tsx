@@ -1,36 +1,10 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import requestApi from '../../utils/requestApi'
+import React from 'react'
 import styled from 'styled-components'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import GoogleMapReact from 'google-map-react'
-import { Me, Pin } from '../../components/MapIcons'
-
-interface iCenter {
-  lat: number,
-  lng: number
-}
-
 const Search: React.FC = () => {
   const classes = useStyles()
-  const [shop, setShop] = React.useState()
-  const [lat, setLat] = React.useState(0)
-  const [lng, setLng] = React.useState(0)
-  const center: iCenter = { lat: lat, lng: lng }
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(pos => {
-      const lat = pos.coords.latitude
-      const lng = pos.coords.longitude
-      const res = requestApi(lat, lng)
-
-      setShop(res.results)
-      setLat(lat)
-      setLng(lng)
-    })
-  })
 
   return (
     <Root>

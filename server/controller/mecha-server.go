@@ -10,6 +10,8 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type mechaServer struct{}
@@ -21,7 +23,7 @@ func (m *mechaServer) SignIn(ctx context.Context, in *messages.FaceAuthRequest) 
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	token, err := query.CreateToken(ctx, user, false)
@@ -29,14 +31,14 @@ func (m *mechaServer) SignIn(ctx context.Context, in *messages.FaceAuthRequest) 
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.ResourceExhausted, err.Error())
 	}
 
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		Token:      token,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest) (*messages.PurchaseResponse, error) {
@@ -49,7 +51,7 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 		return &messages.PurchaseResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	products, err := query.FindProductsByCode(ctx, in.Tag)
@@ -57,7 +59,7 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 		return &messages.PurchaseResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 	for _, product := range products {
 		productIds = append(productIds, product.Id)
@@ -68,7 +70,7 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 		return &messages.PurchaseResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.AlreadyExists, err.Error())
 	}
 
 	err = query.UpdateRfidTags(ctx, in.Tag)
@@ -76,13 +78,13 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 		return &messages.PurchaseResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.ResourceExhausted, err.Error())
 	}
 
 	return &messages.PurchaseResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-	}, err
+	}, status.Error(codes.OK, "")
 }
 
 func (m *mechaServer) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
@@ -91,7 +93,7 @@ func (m *mechaServer) SignOut(ctx context.Context, in *messages.SignOutRequest) 
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_FAILED_AUTH,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func StartingMachaServer(port string) {

@@ -38,7 +38,7 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 			},
 		)
 		if result.Error != nil {
-			err = errors.New("error : table[app_users] is not found.")
+			err = errors.New("Not Found")
 		}
 
 	} else {
@@ -61,10 +61,20 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 
 func CreateUser(ctx context.Context, user table.AppUsers) (table.AppUsers, error) {
 	var (
-		err error
+		err    error
+		exists table.AppUsers
 	)
 
 	db := db.GetDBConnect()
+
+	db.Where(
+		"sign_id = ?",
+		user.SignId,
+	).First(&exists)
+	if exists.Id != 0 {
+		return table.AppUsers{}, errors.New("sign_id already exists")
+	}
+
 	result := db.Create(&user)
 	if result.Error != nil {
 		err = errors.New("error : table[app_users] cannot create.")

@@ -9,9 +9,9 @@ protoc-server:
 	protoc -I protobuf/ protobuf/mechanical_service.proto --go_out=plugins=grpc:./
 
 protoc-py:
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/enums.proto
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/messages.proto
-	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/generated/grpc --grpc_python_out=./mechanical/generated/grpc protobuf/mechanical_service.proto
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/libs/generated/grpc --grpc_python_out=./mechanical/libs/generated/grpc protobuf/enums.proto
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/libs/generated/grpc --grpc_python_out=./mechanical/libs/generated/grpc protobuf/messages.proto
+	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/libs/generated/grpc --grpc_python_out=./mechanical/libs/generated/grpc protobuf/mechanical_service.proto
 
 docker-up:
 	docker-compose up -d

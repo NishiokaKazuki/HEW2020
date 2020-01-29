@@ -1,22 +1,22 @@
-import grpc
-import sys
-from generated.grpc import enums_pb2
-from generated.grpc import messages_pb2
-from generated.grpc import mechanical_service_pb2
-from generated.grpc import enums_pb2_grpc
-from generated.grpc import messages_pb2_grpc
-from generated.grpc import mechanical_service_pb2_grpc
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-def sample(stub, fid):
-    responses = stub.SignIn(messages_pb2.FaceAuthRequest(id = fid))
-    print('Received message {}'.format(responses))
+import trans
+import time
+from libs.state import auth
+from libs       import connect
 
 def run():
-    with grpc.insecure_channel('localhost:49201') as channel:
-        stub = mechanical_service_pb2_grpc.MechanicalServiceStub(channel)
-        while True:
-            id = raw_input("id ->")
-            sample(stub, id)
+    con  = connect.GrpcServer('localhost:49201')
+    stub = con.GetServeCon()
+    at = auth.MainStateAuth(stub)
+    while True:
+        id  = raw_input('>>')
+        token, status = at.Auth(id)
+        if status:
+            print(token)
+        else:
+            print('filed')
 
 if __name__ == '__main__':
     run()

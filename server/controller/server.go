@@ -12,6 +12,8 @@ import (
 	"net"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type server struct{}
@@ -32,7 +34,7 @@ func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messa
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	token, err := query.CreateToken(ctx, user, true)
@@ -40,14 +42,14 @@ func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messa
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.ResourceExhausted, err.Error()) // wip:ResourceExhausted
 	}
 
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		Token:      token,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messages.AuthResponse, error) {
@@ -63,8 +65,7 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-			Token:      "",
-		}, err
+		}, status.Error(codes.AlreadyExists, err.Error())
 	}
 
 	token, err := query.CreateToken(ctx, user, true)
@@ -72,15 +73,14 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-			Token:      "",
-		}, err
+		}, status.Error(codes.ResourceExhausted, err.Error())
 	}
 
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		Token:      token,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
@@ -90,7 +90,7 @@ func (s *server) SignOut(ctx context.Context, in *messages.SignOutRequest) (*mes
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.UserResponse, error) {
@@ -104,7 +104,7 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
 			User:       &messages.UserResponse_AppUser{},
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	user, err = query.GetUser(ctx, id)
@@ -113,7 +113,7 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
 			User:       &messages.UserResponse_AppUser{},
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 
 	return &messages.UserResponse{
@@ -125,7 +125,7 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 			Sex:  user.Sex,
 			Age:  user.Age,
 		},
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) Stores(ctx context.Context, in *messages.StoresRequest) (*messages.StoresResponse, error) {
@@ -141,7 +141,7 @@ func (s *server) Stores(ctx context.Context, in *messages.StoresRequest) (*messa
 		Companies:   companies,
 		Pages:       1,
 		CurrentPage: 1,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*messages.StoreResponse, error) {
@@ -154,7 +154,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		return &messages.StoreResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	stores, err := query.GetStore(ctx, in.Id)
@@ -162,7 +162,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		return &messages.StoreResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 
 	ps, err := query.FindProducts(ctx, in.Id)
@@ -170,7 +170,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		return &messages.StoreResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 	for _, product := range ps {
 		products = append(products, &messages.StoreResponse_Product{
@@ -194,7 +194,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 			Name: stores.Name,
 		},
 		Products: products,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*messages.ProductResponse, error) {
@@ -206,7 +206,7 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 		return &messages.ProductResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	product, err = query.GetProduct(ctx, in.Id)
@@ -214,7 +214,7 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 		return &messages.ProductResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 
 	return &messages.ProductResponse{
@@ -224,7 +224,7 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 		Name:       product.Name,
 		Price:      product.Price,
 		Type:       product.Type,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHistoryRequest) (*messages.ClearingHistoryResponse, error) {
@@ -240,7 +240,7 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		return &messages.ClearingHistoryResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, err
+		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
 	products, err := query.FindBoughtProduts(ctx, id)
@@ -248,7 +248,7 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		return &messages.ClearingHistoryResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED,
-		}, err
+		}, status.Error(codes.NotFound, err.Error())
 	}
 
 	for _, product := range products {
@@ -284,7 +284,7 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		Status:          true,
 		StatusCode:      enums.StatusCodes_SUCCESS,
 		ClearingHistory: history,
-	}, nil
+	}, status.Error(codes.OK, "")
 }
 
 func StartingServer(port string) {
