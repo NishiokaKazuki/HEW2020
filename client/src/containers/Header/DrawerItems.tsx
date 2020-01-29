@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import * as actions from "../../actions"
 import * as actionTypes from "../../utils/actionTypes"
 
+import { useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 
 import { Link } from 'react-router-dom'
@@ -22,17 +23,23 @@ import Search from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
 const DrawerItems: React.FC = () => {
-    const [open, setOpen] = React.useState(false)
+    let history = useHistory()
     const dispatch = useDispatch()
 
     const isAuthenticated = useSelector((state: any) => state.AuthReducer.isAuthenticated)
 
     const handleDrawerToggle = () => {
-        setOpen(!open)
+        dispatch({ type: actionTypes.TOGGLE_DRAWER })
     }
     const openLoginDialog = () => {
         dispatch({ type: actionTypes.OPEN_LOGIN_DIALOG })
         handleDrawerToggle()
+    }
+    const handleLogout = () => {
+        const token: any = localStorage.getItem('token')
+        dispatch(actions.jwtLogout(token))
+        handleDrawerToggle()
+        history.push("/")
     }
 
     const unAuthenticated = (
@@ -120,7 +127,7 @@ const DrawerItems: React.FC = () => {
                     </ListItem>
                 </StyledLink>
             </List>
-            <List onClick={dispatch(actions.jwtLogout)}>
+            <List onClick={handleLogout}>
                 <StyledLink to="/logout">
                     <ListItem button>
                         <ListItemIcon>
@@ -145,7 +152,7 @@ const DrawerItems: React.FC = () => {
 
     return (
         <>
-        { isAuthenticated === true ? authenticated : unAuthenticated }
+            {isAuthenticated === true ? authenticated : unAuthenticated}
         </>
     )
 }

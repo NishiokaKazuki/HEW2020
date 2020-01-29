@@ -49,7 +49,7 @@ const Notification: React.FC = () => {
                 horizontal: 'center',
             }}
             open={notificationOpen}
-            autoHideDuration={2000}
+            autoHideDuration={1200}
             onClose={closeNotification}
         >
             <SnackbarContent

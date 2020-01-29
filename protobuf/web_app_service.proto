@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package services;
-option go_package = "api-server/generated/services";
+option go_package = "server/generated/services";
 
 import "messages.proto";
 
@@ -17,4 +17,5 @@ service WebAppService {
     rpc Store (messages.StoreRequest) returns (messages.StoreResponse) {}
     rpc Product (messages.ProductRequest) returns (messages.ProductResponse) {}
     rpc ClearingHistory (messages.ClearingHistoryRequest) returns (messages.ClearingHistoryResponse) {}
+    rpc GetShopPlace (messages.ShopRequest) returns (messages.ShopResponse) {}
 }

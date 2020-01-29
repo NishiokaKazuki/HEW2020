@@ -1,3 +1,6 @@
+// Drawer
+export const TOGGLE_DRAWER = 'TOGGLE_DRAWER'
+
 // 通知
 export const SET_NOTIFICATION = 'SET_NOTIFICATION'
 export const CLOSE_NOTIFICATION = 'CLOSE_NOTIFICATION'
@@ -17,3 +20,11 @@ export const UNAUTHENTICATE_USER = 'UNAUTHENTICATE_USER'
 // リクエスト
 export const START_REQUEST = 'START_REQUEST'
 export const COMPLETE_REQUEST = 'COMPLETE_REQUEST'
+
+// ユーザ取得
+export const GET_USER = 'GET_USER'
+export const SET_USER = 'SET_USER'
+
+// 購入履歴
+export const GET_HISTORY = 'GET_HISTORY'
+export const SET_HISTORY = 'SET_HISTORY'

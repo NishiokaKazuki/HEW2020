@@ -7,6 +7,7 @@ import {
     Route,
 } from "react-router-dom"
 
+import * as actions from './actions'
 import * as actionTypes from './utils/actionTypes'
 
 import styled from 'styled-components'
@@ -29,6 +30,8 @@ import About from './containers/About'
 import History from './containers/History'
 import Search from './containers/Search'
 
+import User from './class/User'
+
 export const theme = createMuiTheme({
     palette: {
         primary: {
@@ -46,31 +49,35 @@ const App: React.FC = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (localStorage.getItem('token'))
+        const token = User.get('token')
+        if (token) {
+            dispatch(actions.getUser(token))
+            dispatch(actions.getHistory(token))
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
+        }
     })
 
     return (
         <>
-                <ThemeProvider theme={theme}>
-                    <Router>
-                        <ScrollToTop />
-                        <Loading />
-                        <Header />
-                        <Notification />
-                        <Login />
-                        <Main>
-                            <Switch>
-                                <Route exact path="/"><Top /></Route>
-                                <Route exact path="/signup"><Signup /></Route>
-                                <Route exact path="/about"><About /></Route>
-                                <Auth>
-                                    <AuthRoute />
-                                </Auth>
-                            </Switch>
-                        </Main>
-                    </Router>
-                </ThemeProvider>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <ScrollToTop />
+                    <Loading />
+                    <Header />
+                    <Notification />
+                    <Login />
+                    <Main>
+                        <Switch>
+                            <Route exact path="/"><Top /></Route>
+                            <Route exact path="/signup"><Signup /></Route>
+                            <Route exact path="/about"><About /></Route>
+                            <Auth>
+                                <AuthRoute />
+                            </Auth>
+                        </Switch>
+                    </Main>
+                </Router>
+            </ThemeProvider>
         </>
     )
 }
@@ -87,9 +94,9 @@ const AuthRoute: React.FC = () => {
 
 const Main = styled.main`
     width: 500px;
+    max-width: 100vw;
     min-height: 100vh;
     margin: 0 auto;
-    background-color: #ddd;
 `
 
 export default App

@@ -1,0 +1,8 @@
+FROM golang:1.12
+
+ENV GO111MODULE=on
+
+WORKDIR /go/src/HEW2020/server
+COPY . .
+CMD go run main.go
+EXPOSE 49200 49201

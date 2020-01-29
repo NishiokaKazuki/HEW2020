@@ -8,7 +8,7 @@ const About: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <>
+    <Root>
       <div className={classes.toolbar} />
       <H1>About</H1>
       <StyledPaper>
@@ -55,12 +55,12 @@ const About: React.FC = () => {
               <p>HAL大阪 ロボット学科</p>
               <Ul>
                 <li>
-                  <a href="https://github.com/hirokikondo86/gourmet-now" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/NishiokaKazuki" target="_blank" rel="noopener noreferrer">
                     GitHub
                   </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/KHiroki86_" target="_blank" rel="noopener noreferrer">
+                  <a href="https://twitter.com/kazuking_93" target="_blank" rel="noopener noreferrer">
                     Twitter
                   </a>
                 </li>
@@ -72,7 +72,7 @@ const About: React.FC = () => {
               <p>HAL大阪 IT学科</p>
               <Ul>
                 <li>
-                  <a href="https://github.com/hirokikondo86/gourmet-now" target="_blank" rel="noopener noreferrer">
+                  <a href="https://github.com/hirokikondo86" target="_blank" rel="noopener noreferrer">
                     GitHub
                   </a>
                 </li>
@@ -92,13 +92,17 @@ const About: React.FC = () => {
           ※ 当アプリを使用した如何なる損害やトラブルの責任は一切負いかねますので予めご了承ください。
         </p>
       </StyledPaper>
-    </>
+    </Root>
   )
 }
 
 const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }))
+
+const Root = styled.div`
+  padding-bottom: 50px;
+`
 
 const StyledPaper = styled(Paper)`
   margin: 0 20px;
