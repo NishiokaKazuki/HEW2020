@@ -4,6 +4,9 @@ import (
 	"api-server/model/table"
 	"time"
 
+	"github.com/boombuler/barcode"
+	"github.com/boombuler/barcode/qr"
+
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
@@ -27,3 +30,20 @@ func HashPw(pw string) string {
 	// wip:ハッシュ関数
 	return pw
 }
+
+func GenerateQrCode(token string) barcode.Barcode {
+
+	qrCode, _ := qr.Encode(token, qr.L, qr.Auto)
+	qrCode, _ = barcode.Scale(qrCode, 512, 512)
+
+	return qrCode
+}
+
+// func GenerateQrCode(token string) {
+// 	file, _ := os.Create(`./qr`)
+// 	defer file.Close()
+
+// 	qrCode, _ := qr.Encode(token, qr.L, qr.Auto)
+// 	qrCode, _ = barcode.Scale(qrCode, 512, 512)
+// 	png.Encode(io.Writer(file), qrCode)
+// }

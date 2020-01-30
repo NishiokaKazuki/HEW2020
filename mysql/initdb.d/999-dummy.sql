@@ -92,12 +92,3 @@ INSERT INTO bought_products(user_id, product_id, store_id) VALUES
     (7, 4, 4),
     (7, 4, 2),
     (7, 4, 2);
-
-INSERT INTO face_ids(user_id, image) VALUES
-    (1, 'test1'),
-    (2, 'test2'),
-    (3, 'test3'),
-    (4, 'test4'),
-    (5, 'test5'),
-    (6, 'test6'),
-    (7, 'test7');

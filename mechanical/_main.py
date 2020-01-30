@@ -7,8 +7,8 @@ from libs.generated.grpc import enums_pb2_grpc
 from libs.generated.grpc import messages_pb2_grpc
 from libs.generated.grpc import mechanical_service_pb2_grpc
 
-def sample(stub, fid):
-    responses = stub.SignIn(messages_pb2.FaceAuthRequest(id = fid))
+def sample(stub, qrcode):
+    responses = stub.SignIn(messages_pb2.FaceAuthRequest(code = qrcode))
     print('Received message {}'.format(responses))
 
 def run():

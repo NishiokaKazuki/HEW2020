@@ -136,37 +136,37 @@ func signin(ctx context.Context, client pb.WebAppServiceClient) {
 }
 
 func msignin(ctx context.Context, client pb.MechanicalServiceClient) {
-	args := os.Args
-	res, err := client.SignIn(ctx, &messages.FaceAuthRequest{
-		Id: args[2],
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Print(res.Token)
+	// args := os.Args
+	// res, err := client.SignIn(ctx, &messages.FaceAuthRequest{
+	// 	Id: args[2],
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Print(res.Token)
 }
 
 func mpurchase(ctx context.Context, client pb.MechanicalServiceClient) {
-	args := os.Args
-	_, err := client.Purchase(ctx, &messages.PurchaseRequest{
-		Token: args[2],
-		Tag:   []string{"ABCDEFG", "HIJKLMN", "VWXYZ12"},
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("success")
+	// args := os.Args
+	// _, err := client.Purchase(ctx, &messages.PurchaseRequest{
+	// 	: args[2],
+	// 	Tag:   []string{"ABCDEFG", "HIJKLMN", "VWXYZ12"},
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Println("success")
 }
 
 func msignout(ctx context.Context, client pb.MechanicalServiceClient) {
-	args := os.Args
-	_, err := client.SignOut(ctx, &messages.SignOutRequest{
-		Token: args[2],
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("success")
+	// args := os.Args
+	// _, err := client.SignOut(ctx, &messages.SignOutRequest{
+	// 	Token: args[2],
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Println("success")
 }
 
 func history(ctx context.Context, client pb.WebAppServiceClient) {

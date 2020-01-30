@@ -8,7 +8,7 @@ import (
 	"errors"
 )
 
-func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, error) {
+func CreateToken(ctx context.Context, user table.AppUsers) (string, error) {
 	var (
 		token  string
 		tokens table.Tokens
@@ -17,9 +17,8 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 
 	db := db.GetDBConnect()
 	db.Where(
-		"tokens.user_id = ? AND tokens.is_app = ?",
+		"tokens.user_id = ?",
 		user.Id,
-		isApp,
 	).First(&tokens)
 
 	token = u.GetToken(user)
@@ -27,14 +26,12 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 		result := db.Table(
 			"tokens",
 		).Where(
-			"tokens.user_id = ? AND tokens.is_app = ?",
+			"tokens.user_id = ?",
 			user.Id,
-			isApp,
 		).Update(
 			&table.Tokens{
 				UserId: user.Id,
 				Token:  token,
-				IsApp:  isApp,
 			},
 		)
 		if result.Error != nil {
@@ -48,7 +45,6 @@ func CreateToken(ctx context.Context, user table.AppUsers, isApp bool) (string, 
 			&table.Tokens{
 				UserId: user.Id,
 				Token:  token,
-				IsApp:  isApp,
 			},
 		)
 		if result.Error != nil {

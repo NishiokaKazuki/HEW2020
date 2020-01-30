@@ -107,18 +107,6 @@ CREATE TABLE bought_products
      REFERENCES products(id)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS face_ids;
-
-CREATE TABLE face_ids
-(
-    user_id          bigint unsigned NOT NULL,
-    image            text NOT NULL,
-    created_at       timestamp NOT NULL DEFAULT current_timestamp,
-    updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
-    FOREIGN KEY (user_id) 
-     REFERENCES app_users(id)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 DROP TABLE IF EXISTS tokens;
 
 CREATE TABLE tokens
@@ -126,7 +114,6 @@ CREATE TABLE tokens
     id              bigint unsigned AUTO_INCREMENT,
     user_id         bigint unsigned NOT NULL,
     token           text NOT NULL,
-    is_app          boolean NOT NULL DEFAULT TRUE,
     created_at       timestamp NOT NULL DEFAULT current_timestamp,
     updated_at       timestamp NOT NULL DEFAULT current_timestamp on update current_timestamp,
     FOREIGN KEY (user_id) 

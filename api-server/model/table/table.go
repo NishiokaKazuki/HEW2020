@@ -63,5 +63,4 @@ type Tokens struct {
 	Id     uint64
 	UserId uint64
 	Token  string
-	IsApp  bool
 }

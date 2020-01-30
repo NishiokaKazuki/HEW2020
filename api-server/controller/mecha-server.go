@@ -16,28 +16,33 @@ import (
 
 type mechaServer struct{}
 
-func (m *mechaServer) SignIn(ctx context.Context, in *messages.FaceAuthRequest) (*messages.AuthResponse, error) {
+func (m *mechaServer) SignIn(ctx context.Context, in *messages.AuthWithQrCodeRequest) (*messages.AuthWithQrCodeResponse, error) {
 
-	user, err := query.GetUserWithFaceId(ctx, in.Id)
+	id, err := Auth(ctx, in.Code)
 	if err != nil {
-		return &messages.AuthResponse{
+		return &messages.AuthWithQrCodeResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
 		}, status.Error(codes.Unauthenticated, err.Error())
 	}
 
-	token, err := query.CreateToken(ctx, user, false)
+	user, err := query.GetUser(ctx, id)
 	if err != nil {
-		return &messages.AuthResponse{
+		return &messages.AuthWithQrCodeResponse{
 			Status:     false,
-			StatusCode: enums.StatusCodes_FAILED,
-		}, status.Error(codes.ResourceExhausted, err.Error())
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, status.Error(codes.NotFound, err.Error())
 	}
 
-	return &messages.AuthResponse{
+	return &messages.AuthWithQrCodeResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-		Token:      token,
+		User: &messages.AuthWithQrCodeResponse_AppUser{
+			Id:   user.Id,
+			Name: user.Name,
+			Sex:  user.Sex,
+			Age:  user.Age,
+		},
 	}, status.Error(codes.OK, "")
 }
 
@@ -45,14 +50,6 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 	var (
 		productIds []uint64
 	)
-
-	id, err := Auth(ctx, in.Token, false)
-	if err != nil {
-		return &messages.PurchaseResponse{
-			Status:     false,
-			StatusCode: enums.StatusCodes_FAILED_AUTH,
-		}, status.Error(codes.Unauthenticated, err.Error())
-	}
 
 	products, err := query.FindProductsByCode(ctx, in.Tag)
 	if err != nil {
@@ -65,7 +62,7 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 		productIds = append(productIds, product.Id)
 	}
 
-	err = query.CreateBoughtProducts(ctx, productIds, id, in.Id)
+	err = query.CreateBoughtProducts(ctx, productIds, in.UserId, in.StoreId)
 	if err != nil {
 		return &messages.PurchaseResponse{
 			Status:     false,
@@ -84,15 +81,6 @@ func (m *mechaServer) Purchase(ctx context.Context, in *messages.PurchaseRequest
 	return &messages.PurchaseResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
-	}, status.Error(codes.OK, "")
-}
-
-func (m *mechaServer) SignOut(ctx context.Context, in *messages.SignOutRequest) (*messages.AuthResponse, error) {
-	_ = query.DeleteToken(ctx, in.Token, false)
-
-	return &messages.AuthResponse{
-		Status:     true,
-		StatusCode: enums.StatusCodes_FAILED_AUTH,
 	}, status.Error(codes.OK, "")
 }
 
