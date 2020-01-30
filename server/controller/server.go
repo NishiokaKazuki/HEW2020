@@ -1,15 +1,15 @@
 package controller
 
 import (
+	"context"
+	"log"
+	"net"
 	"server/controller/query"
 	"server/controller/utils"
 	"server/generated/enums"
 	"server/generated/messages"
 	pb "server/generated/services"
 	"server/model/table"
-	"context"
-	"log"
-	"net"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -287,6 +287,10 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		StatusCode:      enums.StatusCodes_SUCCESS,
 		ClearingHistory: history,
 	}, status.Error(codes.OK, "")
+}
+
+func (s *server) GetShopPlace(ctx context.Context, in *messages.ShopRequest) (*messages.ShopResponse, error) {
+	return nil, nil
 }
 
 func StartingServer(port string) {

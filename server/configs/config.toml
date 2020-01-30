@@ -6,7 +6,7 @@ version  = "alpha"
 dbms = "mysql"
 user = "root"
 pass = "secret"
-protocol = "tcp(localhost:13306)"
+protocol = "tcp(db)"
 dbname = "hew2020"
 
 [TOKEN]

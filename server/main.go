@@ -17,7 +17,7 @@ func main() {
 	finish := make(chan bool)
 
 	go controller.StartingServer(port1)
-	go controller.StartingMachaServer(port2)
+	// go controller.StartingMachaServer(port2)
 
 	<-finish
 
