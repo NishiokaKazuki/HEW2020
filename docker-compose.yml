@@ -17,6 +17,7 @@ services:
       - ./server:/go/src/HEW2020/server
     ports:
       - "49200:49200"
+      - "49201:49201"
     container_name: "hew2020-server"
 
   client:
