@@ -17,7 +17,7 @@ class GrpcServer(object):
     def __init__(self, url):
         channel = grpc.insecure_channel(url)
         self.stub = mechanical_service_pb2_grpc.MechanicalServiceStub(channel)
-        print('Call class:GrpcServer ')
+        print('Call class:GrpcServer')
 
     def GetServeCon(self):
         return self.stub
