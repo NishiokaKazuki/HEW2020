@@ -9,9 +9,9 @@ import (
 	"errors"
 )
 
-func Auth(ctx context.Context, token string, is_app bool) (uint64, error) {
+func Auth(ctx context.Context, token string) (uint64, error) {
 
-	tokens, err := query.GetAuthTokens(ctx, token, is_app)
+	tokens, err := query.GetAuthTokens(ctx, token)
 	if err != nil {
 		return 0, err
 	}

@@ -17,11 +17,11 @@ class MainStateAuth(object):
     def __init__(self,stub):
         self.stub = stub
 
-    def Auth(self, id):
-        res = self.stub.SignIn(messages_pb2.FaceAuthRequest(id = id))
+    def Auth(self, qrcode):
+        res = self.stub.SignIn(messages_pb2.AuthWithQrCodeRequest(code = qrcode))
         print(res)
         # 認証失敗
         if res.status != True:
             utils.OutStatusCode(res.statuscode)
             return "", False
-        return res.token, True
+        return res.user, True
