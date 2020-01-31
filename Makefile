@@ -20,6 +20,10 @@ docker-init-db:
 	docker-compose exec db /bin/bash -psecret -c "chmod 0775 docker-entrypoint-initdb.d/init-db.sh" &&\
 	docker-compose exec db /bin/bash -psecret -c "sh ./docker-entrypoint-initdb.d/init-db.sh"
 
+docker-reset-dummy:
+	docker-compose exec db /bin/bash -psecret -c "chmod 0775 docker-entrypoint-initdb.d/reset_dummy.sh" &&\
+	docker-compose exec db /bin/bash -psecret -c "sh ./docker-entrypoint-initdb.d/reset_dummy.sh"
+
 docker-stop:
 	docker-compose stop
 

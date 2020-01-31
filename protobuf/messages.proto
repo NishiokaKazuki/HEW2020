@@ -140,13 +140,24 @@ message ClearingHistoryResponse {
     }
 }
 
-message FaceAuthRequest {
-    string id = 1;
+message AuthWithQrCodeRequest {
+    string code = 1;
+}
+message AuthWithQrCodeResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    AppUser user = 3;
+    message AppUser {
+        uint64 id = 1;
+        string name = 2;
+        enums.SexTypes sex = 3;
+        uint32 age = 4;
+    }
 }
 
 message PurchaseRequest {
-    string token = 1;
-    uint64 id    = 2;
+    uint64 user_id  = 1;
+    uint64 store_id = 2;
     repeated string tag = 3;
 }
 message PurchaseResponse {

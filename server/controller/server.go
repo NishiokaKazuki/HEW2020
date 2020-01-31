@@ -1,15 +1,15 @@
 package controller
 
 import (
+	"context"
+	"log"
+	"net"
 	"server/controller/query"
 	"server/controller/utils"
 	"server/generated/enums"
 	"server/generated/messages"
 	pb "server/generated/services"
 	"server/model/table"
-	"context"
-	"log"
-	"net"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -37,13 +37,15 @@ func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messa
 		}, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	token, err := query.CreateToken(ctx, user, true)
+	token, err := query.CreateToken(ctx, user)
 	if err != nil {
 		return &messages.AuthResponse{
 			Status:     false,
 			StatusCode: enums.StatusCodes_FAILED_AUTH,
 		}, status.Error(codes.ResourceExhausted, err.Error()) // wip:ResourceExhausted
 	}
+
+	utils.GenerateQrCode(token)
 
 	return &messages.AuthResponse{
 		Status:     true,
@@ -68,7 +70,7 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 		}, status.Error(codes.AlreadyExists, err.Error())
 	}
 
-	token, err := query.CreateToken(ctx, user, true)
+	token, err := query.CreateToken(ctx, user)
 	if err != nil {
 		return &messages.AuthResponse{
 			Status:     false,
@@ -98,7 +100,7 @@ func (s *server) User(ctx context.Context, in *messages.UserRequest) (*messages.
 		user table.AppUsers
 	)
 
-	id, err := Auth(ctx, in.Token, true)
+	id, err := Auth(ctx, in.Token)
 	if err != nil {
 		return &messages.UserResponse{
 			Status:     false,
@@ -149,7 +151,7 @@ func (s *server) Store(ctx context.Context, in *messages.StoreRequest) (*message
 		products []*messages.StoreResponse_Product
 	)
 
-	_, err := Auth(ctx, in.Token, true)
+	_, err := Auth(ctx, in.Token)
 	if err != nil {
 		return &messages.StoreResponse{
 			Status:     false,
@@ -201,7 +203,7 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 	var (
 		product table.Products
 	)
-	_, err := Auth(ctx, in.Token, true)
+	_, err := Auth(ctx, in.Token)
 	if err != nil {
 		return &messages.ProductResponse{
 			Status:     false,
@@ -235,7 +237,7 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		storeId  uint64
 	)
 
-	id, err := Auth(ctx, in.Token, true)
+	id, err := Auth(ctx, in.Token)
 	if err != nil {
 		return &messages.ClearingHistoryResponse{
 			Status:     false,
@@ -285,6 +287,10 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 		StatusCode:      enums.StatusCodes_SUCCESS,
 		ClearingHistory: history,
 	}, status.Error(codes.OK, "")
+}
+
+func (s *server) GetShopPlace(ctx context.Context, in *messages.ShopRequest) (*messages.ShopResponse, error) {
+	return nil, nil
 }
 
 func StartingServer(port string) {

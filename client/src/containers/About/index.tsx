@@ -5,8 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 
 const About: React.FC = () => {
-  const classes = useStyles()
-
   return (
     <Root>
       <div className={classes.toolbar} />
@@ -95,10 +93,6 @@ const About: React.FC = () => {
     </Root>
   )
 }
-
-const useStyles = makeStyles(theme => ({
-  toolbar: theme.mixins.toolbar,
-}))
 
 const Root = styled.div`
   padding-bottom: 50px;

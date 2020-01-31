@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='messages',
   syntax='proto3',
   serialized_options=_b('Z\035api-server/generated/messages'),
-  serialized_pb=_b('\n\x0emessages.proto\x12\x08messages\x1a\x0b\x65nums.proto\"\x1c\n\x0b\x41uthRequest\x12\r\n\x05token\x18\x01 \x01(\t\"V\n\x0c\x41uthResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\r\n\x05token\x18\x03 \x01(\t\"1\n\rSignInRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x0f\n\x07user_pw\x18\x02 \x01(\t\"j\n\rSignUpRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1c\n\x03sex\x18\x02 \x01(\x0e\x32\x0f.enums.SexTypes\x12\x0b\n\x03\x61ge\x18\x03 \x01(\r\x12\x0f\n\x07user_id\x18\x04 \x01(\t\x12\x0f\n\x07user_pw\x18\x05 \x01(\t\"\x1f\n\x0eSignOutRequest\x12\r\n\x05token\x18\x01 \x01(\t\"q\n\rStoresRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12,\n\x08\x63riteria\x18\x02 \x01(\x0e\x32\x1a.enums.StoreSearchCriteria\x12\r\n\x05serch\x18\x03 \x01(\t\x12\x14\n\x0c\x63urrent_page\x18\x04 \x01(\r\"\x9e\x02\n\x0eStoresResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12.\n\x06stores\x18\x03 \x03(\x0b\x32\x1e.messages.StoresResponse.Store\x12\x33\n\tcompanies\x18\x04 \x03(\x0b\x32 .messages.StoresResponse.Company\x12\r\n\x05pages\x18\x05 \x01(\r\x12\x14\n\x0c\x63urrent_page\x18\x06 \x01(\r\x1a$\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\")\n\x0cStoreRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x04\"\xf8\x02\n\rStoreResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12,\n\x05store\x18\x03 \x01(\x0b\x32\x1d.messages.StoreResponse.Store\x12\x30\n\x07\x63ompany\x18\x04 \x01(\x0b\x32\x1f.messages.StoreResponse.Company\x12\x31\n\x08products\x18\x05 \x03(\x0b\x32\x1f.messages.StoreResponse.Product\x1a\x33\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x1a\x41\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05price\x18\x03 \x01(\r\x12\r\n\x05stock\x18\x04 \x01(\r\"+\n\x0eProductRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x04\"\x90\x01\n\x0fProductResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\n\n\x02id\x18\x03 \x01(\x04\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\r\n\x05price\x18\x05 \x01(\r\x12\r\n\x05stock\x18\x06 \x01(\r\x12\x0c\n\x04type\x18\x07 \x01(\r\"\x1c\n\x0bUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\xc5\x01\n\x0cUserResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12,\n\x04user\x18\x03 \x01(\x0b\x32\x1e.messages.UserResponse.AppUser\x1aN\n\x07\x41ppUser\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x03sex\x18\x03 \x01(\x0e\x32\x0f.enums.SexTypes\x12\x0b\n\x03\x61ge\x18\x04 \x01(\r\"\'\n\x16\x43learingHistoryRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x8c\x04\n\x17\x43learingHistoryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\x43\n\x0f\x43learingHistory\x18\x03 \x03(\x0b\x32*.messages.ClearingHistoryResponse.Clearing\x1a\xf2\x02\n\x08\x43learing\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12?\n\x05store\x18\x02 \x01(\x0b\x32\x30.messages.ClearingHistoryResponse.Clearing.Store\x12\x43\n\x07\x63ompany\x18\x03 \x01(\x0b\x32\x32.messages.ClearingHistoryResponse.Clearing.Company\x12\x44\n\x08products\x18\x04 \x03(\x0b\x32\x32.messages.ClearingHistoryResponse.Clearing.Product\x1a\x33\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x1a\x32\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05price\x18\x03 \x01(\r\"\x1d\n\x0f\x46\x61\x63\x65\x41uthRequest\x12\n\n\x02id\x18\x01 \x01(\t\"9\n\x0fPurchaseRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x04\x12\x0b\n\x03tag\x18\x03 \x03(\t\"K\n\x10PurchaseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodesB\x1fZ\x1d\x61pi-server/generated/messagesb\x06proto3')
+  serialized_pb=_b('\n\x0emessages.proto\x12\x08messages\x1a\x0b\x65nums.proto\"\x1c\n\x0b\x41uthRequest\x12\r\n\x05token\x18\x01 \x01(\t\"V\n\x0c\x41uthResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\r\n\x05token\x18\x03 \x01(\t\"1\n\rSignInRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x0f\n\x07user_pw\x18\x02 \x01(\t\"j\n\rSignUpRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x1c\n\x03sex\x18\x02 \x01(\x0e\x32\x0f.enums.SexTypes\x12\x0b\n\x03\x61ge\x18\x03 \x01(\r\x12\x0f\n\x07user_id\x18\x04 \x01(\t\x12\x0f\n\x07user_pw\x18\x05 \x01(\t\"\x1f\n\x0eSignOutRequest\x12\r\n\x05token\x18\x01 \x01(\t\"q\n\rStoresRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12,\n\x08\x63riteria\x18\x02 \x01(\x0e\x32\x1a.enums.StoreSearchCriteria\x12\r\n\x05serch\x18\x03 \x01(\t\x12\x14\n\x0c\x63urrent_page\x18\x04 \x01(\r\"\x9e\x02\n\x0eStoresResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12.\n\x06stores\x18\x03 \x03(\x0b\x32\x1e.messages.StoresResponse.Store\x12\x33\n\tcompanies\x18\x04 \x03(\x0b\x32 .messages.StoresResponse.Company\x12\r\n\x05pages\x18\x05 \x01(\r\x12\x14\n\x0c\x63urrent_page\x18\x06 \x01(\r\x1a$\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0f\n\x07\x61\x64\x64ress\x18\x02 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\")\n\x0cStoreRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x04\"\xf8\x02\n\rStoreResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12,\n\x05store\x18\x03 \x01(\x0b\x32\x1d.messages.StoreResponse.Store\x12\x30\n\x07\x63ompany\x18\x04 \x01(\x0b\x32\x1f.messages.StoreResponse.Company\x12\x31\n\x08products\x18\x05 \x03(\x0b\x32\x1f.messages.StoreResponse.Product\x1a\x33\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x1a\x41\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05price\x18\x03 \x01(\r\x12\r\n\x05stock\x18\x04 \x01(\r\"+\n\x0eProductRequest\x12\r\n\x05token\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x04\"\x90\x01\n\x0fProductResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\n\n\x02id\x18\x03 \x01(\x04\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\r\n\x05price\x18\x05 \x01(\r\x12\r\n\x05stock\x18\x06 \x01(\r\x12\x0c\n\x04type\x18\x07 \x01(\r\"\x1c\n\x0bUserRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\xc5\x01\n\x0cUserResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12,\n\x04user\x18\x03 \x01(\x0b\x32\x1e.messages.UserResponse.AppUser\x1aN\n\x07\x41ppUser\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x03sex\x18\x03 \x01(\x0e\x32\x0f.enums.SexTypes\x12\x0b\n\x03\x61ge\x18\x04 \x01(\r\"\'\n\x16\x43learingHistoryRequest\x12\r\n\x05token\x18\x01 \x01(\t\"\x8c\x04\n\x17\x43learingHistoryResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\x43\n\x0f\x43learingHistory\x18\x03 \x03(\x0b\x32*.messages.ClearingHistoryResponse.Clearing\x1a\xf2\x02\n\x08\x43learing\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12?\n\x05store\x18\x02 \x01(\x0b\x32\x30.messages.ClearingHistoryResponse.Clearing.Store\x12\x43\n\x07\x63ompany\x18\x03 \x01(\x0b\x32\x32.messages.ClearingHistoryResponse.Clearing.Company\x12\x44\n\x08products\x18\x04 \x03(\x0b\x32\x32.messages.ClearingHistoryResponse.Clearing.Product\x1a\x33\n\x05Store\x12\n\n\x02id\x18\x01 \x01(\x04\x12\r\n\x05image\x18\x02 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x03 \x01(\t\x1a#\n\x07\x43ompany\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x1a\x32\n\x07Product\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05price\x18\x03 \x01(\r\"%\n\x15\x41uthWithQrCodeRequest\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\"\xd9\x01\n\x16\x41uthWithQrCodeResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodes\x12\x36\n\x04user\x18\x03 \x01(\x0b\x32(.messages.AuthWithQrCodeResponse.AppUser\x1aN\n\x07\x41ppUser\x12\n\n\x02id\x18\x01 \x01(\x04\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x1c\n\x03sex\x18\x03 \x01(\x0e\x32\x0f.enums.SexTypes\x12\x0b\n\x03\x61ge\x18\x04 \x01(\r\"A\n\x0fPurchaseRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x10\n\x08store_id\x18\x02 \x01(\x04\x12\x0b\n\x03tag\x18\x03 \x03(\t\"K\n\x10PurchaseResponse\x12\x0e\n\x06status\x18\x01 \x01(\x08\x12\'\n\x0bstatus_code\x18\x02 \x01(\x0e\x32\x12.enums.StatusCodesB\x1fZ\x1d\x61pi-server/generated/messagesb\x06proto3')
   ,
   dependencies=[enums__pb2.DESCRIPTOR,])
 
@@ -1143,15 +1143,15 @@ _CLEARINGHISTORYRESPONSE = _descriptor.Descriptor(
 )
 
 
-_FACEAUTHREQUEST = _descriptor.Descriptor(
-  name='FaceAuthRequest',
-  full_name='messages.FaceAuthRequest',
+_AUTHWITHQRCODEREQUEST = _descriptor.Descriptor(
+  name='AuthWithQrCodeRequest',
+  full_name='messages.AuthWithQrCodeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='messages.FaceAuthRequest.id', index=0,
+      name='code', full_name='messages.AuthWithQrCodeRequest.code', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1170,7 +1170,103 @@ _FACEAUTHREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=2167,
-  serialized_end=2196,
+  serialized_end=2204,
+)
+
+
+_AUTHWITHQRCODERESPONSE_APPUSER = _descriptor.Descriptor(
+  name='AppUser',
+  full_name='messages.AuthWithQrCodeResponse.AppUser',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='messages.AuthWithQrCodeResponse.AppUser.id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='messages.AuthWithQrCodeResponse.AppUser.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sex', full_name='messages.AuthWithQrCodeResponse.AppUser.sex', index=2,
+      number=3, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='age', full_name='messages.AuthWithQrCodeResponse.AppUser.age', index=3,
+      number=4, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1519,
+  serialized_end=1597,
+)
+
+_AUTHWITHQRCODERESPONSE = _descriptor.Descriptor(
+  name='AuthWithQrCodeResponse',
+  full_name='messages.AuthWithQrCodeResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='messages.AuthWithQrCodeResponse.status', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='status_code', full_name='messages.AuthWithQrCodeResponse.status_code', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='user', full_name='messages.AuthWithQrCodeResponse.user', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_AUTHWITHQRCODERESPONSE_APPUSER, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2207,
+  serialized_end=2424,
 )
 
 
@@ -1182,14 +1278,14 @@ _PURCHASEREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='token', full_name='messages.PurchaseRequest.token', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      name='user_id', full_name='messages.PurchaseRequest.user_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='id', full_name='messages.PurchaseRequest.id', index=1,
+      name='store_id', full_name='messages.PurchaseRequest.store_id', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1214,8 +1310,8 @@ _PURCHASEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2198,
-  serialized_end=2255,
+  serialized_start=2426,
+  serialized_end=2491,
 )
 
 
@@ -1252,8 +1348,8 @@ _PURCHASERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2257,
-  serialized_end=2332,
+  serialized_start=2493,
+  serialized_end=2568,
 )
 
 _AUTHRESPONSE.fields_by_name['status_code'].enum_type = enums__pb2._STATUSCODES
@@ -1285,6 +1381,10 @@ _CLEARINGHISTORYRESPONSE_CLEARING.fields_by_name['products'].message_type = _CLE
 _CLEARINGHISTORYRESPONSE_CLEARING.containing_type = _CLEARINGHISTORYRESPONSE
 _CLEARINGHISTORYRESPONSE.fields_by_name['status_code'].enum_type = enums__pb2._STATUSCODES
 _CLEARINGHISTORYRESPONSE.fields_by_name['ClearingHistory'].message_type = _CLEARINGHISTORYRESPONSE_CLEARING
+_AUTHWITHQRCODERESPONSE_APPUSER.fields_by_name['sex'].enum_type = enums__pb2._SEXTYPES
+_AUTHWITHQRCODERESPONSE_APPUSER.containing_type = _AUTHWITHQRCODERESPONSE
+_AUTHWITHQRCODERESPONSE.fields_by_name['status_code'].enum_type = enums__pb2._STATUSCODES
+_AUTHWITHQRCODERESPONSE.fields_by_name['user'].message_type = _AUTHWITHQRCODERESPONSE_APPUSER
 _PURCHASERESPONSE.fields_by_name['status_code'].enum_type = enums__pb2._STATUSCODES
 DESCRIPTOR.message_types_by_name['AuthRequest'] = _AUTHREQUEST
 DESCRIPTOR.message_types_by_name['AuthResponse'] = _AUTHRESPONSE
@@ -1301,7 +1401,8 @@ DESCRIPTOR.message_types_by_name['UserRequest'] = _USERREQUEST
 DESCRIPTOR.message_types_by_name['UserResponse'] = _USERRESPONSE
 DESCRIPTOR.message_types_by_name['ClearingHistoryRequest'] = _CLEARINGHISTORYREQUEST
 DESCRIPTOR.message_types_by_name['ClearingHistoryResponse'] = _CLEARINGHISTORYRESPONSE
-DESCRIPTOR.message_types_by_name['FaceAuthRequest'] = _FACEAUTHREQUEST
+DESCRIPTOR.message_types_by_name['AuthWithQrCodeRequest'] = _AUTHWITHQRCODEREQUEST
+DESCRIPTOR.message_types_by_name['AuthWithQrCodeResponse'] = _AUTHWITHQRCODERESPONSE
 DESCRIPTOR.message_types_by_name['PurchaseRequest'] = _PURCHASEREQUEST
 DESCRIPTOR.message_types_by_name['PurchaseResponse'] = _PURCHASERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -1491,12 +1592,27 @@ _sym_db.RegisterMessage(ClearingHistoryResponse.Clearing.Store)
 _sym_db.RegisterMessage(ClearingHistoryResponse.Clearing.Company)
 _sym_db.RegisterMessage(ClearingHistoryResponse.Clearing.Product)
 
-FaceAuthRequest = _reflection.GeneratedProtocolMessageType('FaceAuthRequest', (_message.Message,), {
-  'DESCRIPTOR' : _FACEAUTHREQUEST,
+AuthWithQrCodeRequest = _reflection.GeneratedProtocolMessageType('AuthWithQrCodeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _AUTHWITHQRCODEREQUEST,
   '__module__' : 'messages_pb2'
-  # @@protoc_insertion_point(class_scope:messages.FaceAuthRequest)
+  # @@protoc_insertion_point(class_scope:messages.AuthWithQrCodeRequest)
   })
-_sym_db.RegisterMessage(FaceAuthRequest)
+_sym_db.RegisterMessage(AuthWithQrCodeRequest)
+
+AuthWithQrCodeResponse = _reflection.GeneratedProtocolMessageType('AuthWithQrCodeResponse', (_message.Message,), {
+
+  'AppUser' : _reflection.GeneratedProtocolMessageType('AppUser', (_message.Message,), {
+    'DESCRIPTOR' : _AUTHWITHQRCODERESPONSE_APPUSER,
+    '__module__' : 'messages_pb2'
+    # @@protoc_insertion_point(class_scope:messages.AuthWithQrCodeResponse.AppUser)
+    })
+  ,
+  'DESCRIPTOR' : _AUTHWITHQRCODERESPONSE,
+  '__module__' : 'messages_pb2'
+  # @@protoc_insertion_point(class_scope:messages.AuthWithQrCodeResponse)
+  })
+_sym_db.RegisterMessage(AuthWithQrCodeResponse)
+_sym_db.RegisterMessage(AuthWithQrCodeResponse.AppUser)
 
 PurchaseRequest = _reflection.GeneratedProtocolMessageType('PurchaseRequest', (_message.Message,), {
   'DESCRIPTOR' : _PURCHASEREQUEST,
