@@ -157,15 +157,14 @@ class User {
                 // 購入履歴の取得
                 const clearingHistories = res.getClearinghistoryList()
 
-                // 購入商品の取得
-                let products: any;
-                for (let i = 0; i < clearingHistories.length; i++) {
-                    products = clearingHistories[i].getProductsList()
-                }
-
-                // 返却値の生成
+                // 購入履歴用の配列
                 let histories = new Array(clearingHistories.length)
+                // 商品購入履歴用の配列
+                let products = new Array()
+
+                // historiesに値を代入
                 for (let i = 0; i < clearingHistories.length; i++) {
+                    // 購入日、店舗、会社を追加
                     histories[i] = {
                         date: clearingHistories[i].getDate(),
                         store: {
@@ -176,15 +175,20 @@ class User {
                         company: {
                             id: clearingHistories[i].getCompany().getId(),
                             name: clearingHistories[i].getCompany().getName()
-                        },
-                        product: {
-                            id: products[0].getId(),
-                            name: products[0].getName(),
-                            price: products[0].getPrice()
                         }
                     }
+                    // 購入商品一覧を作成
+                    for (let j = 0; j < clearingHistories[i].getProductsList().length; j++) {
+                        products[j] = {
+                            id: clearingHistories[i].getProductsList()[j].getId(),
+                            name: clearingHistories[i].getProductsList()[j].getName(),
+                            price: clearingHistories[i].getProductsList()[j].getPrice()
+                        }
+                    }
+                    // 購入履歴に購入商品一覧を追加
+                    histories[i]['products'] = products
                 }
-
+                console.log(histories)
                 resolve(histories)
             })
         })

@@ -150,7 +150,6 @@ export const getHistory = (token: any) => {
             dispatch({ type: actionTypes.START_REQUEST })
 
             const histories: any = await User.historyRequest(token)
-            console.log(histories)
             dispatch(setHistory(histories))
 
             dispatch({ type: actionTypes.COMPLETE_REQUEST })

@@ -9,8 +9,8 @@ const TopPage: React.FC = () => {
   return (
     <Root>
       <div className={classes.toolbar} />
-      <h1>~ No Checkouts. ~</h1>
-      <h1>自動販売機</h1>
+      <H1>~ No Checkouts. ~</H1>
+      <H1>自動販売機</H1>
     </Root>
   )
 }
@@ -21,6 +21,10 @@ const useStyles = makeStyles(theme => ({
 
 const Root = styled.div`
   padding-bottom: 50px;
+`
+
+const H1 = styled.h1`
+  text-align: center;
 `
 
 export default TopPage
