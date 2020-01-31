@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package services;
-option go_package = "api-server/generated/services";
+option go_package = "server/generated/services";
 
 import "messages.proto";
 
