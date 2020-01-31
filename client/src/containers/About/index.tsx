@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper'
 const About: React.FC = () => {
   return (
     <Root>
-      <div className={classes.toolbar} />
       <H1>About</H1>
       <StyledPaper>
         <section>

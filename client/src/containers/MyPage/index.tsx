@@ -5,7 +5,6 @@ import User from "../../class/User"
 import { makeStyles } from '@material-ui/core/styles'
 
 const MyPage: React.FC = () => {
-  const classes = useStyles()
   const [display, setDisplay] = React.useState(false)
   const token: any = User.get('token')
 
@@ -21,7 +20,6 @@ const MyPage: React.FC = () => {
 
   return (
     <Root>
-      <div className={classes.toolbar} />
       <H1>マイページ</H1>
       <P>あなたのQRコード</P>
       {
@@ -33,10 +31,6 @@ const MyPage: React.FC = () => {
     </Root>
   )
 }
-
-const useStyles = makeStyles(theme => ({
-  toolbar: theme.mixins.toolbar,
-}))
 
 const Root = styled.div`
   padding-bottom: 50px;

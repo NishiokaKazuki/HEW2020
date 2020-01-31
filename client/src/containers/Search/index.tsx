@@ -14,7 +14,6 @@ interface iCenter {
 }
 
 const Search: React.FC = () => {
-  const classes = useStyles()
   const [shop, setShop] = React.useState()
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
@@ -35,7 +34,6 @@ const Search: React.FC = () => {
   return (
     <Root>
       <div id="map"></div>
-      <div className={classes.toolbar} />
       <H1>店舗検索</H1>
 
       <GoogleMapWrapper>
@@ -57,10 +55,6 @@ const Search: React.FC = () => {
     </Root>
   )
 }
-
-const useStyles = makeStyles(theme => ({
-  toolbar: theme.mixins.toolbar,
-}))
 
 const Root = styled.div`
   padding-bottom: 50px;
