@@ -1,6 +1,7 @@
 protoc-client:
 	cd client &&\
 	sh protoc.sh
+	sh ./client/eslint-disable.sh
 
 protoc-server:
 	protoc -I protobuf/ protobuf/enums.proto --go_out=plugins=grpc:./
