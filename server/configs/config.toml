@@ -1,0 +1,13 @@
+[API]
+port     = ":3306"
+version  = "alpha"
+
+[DB]
+dbms = "mysql"
+user = "root"
+pass = "secret"
+protocol = "tcp(db)"
+dbname = "hew2020"
+
+[TOKEN]
+exp = "24"

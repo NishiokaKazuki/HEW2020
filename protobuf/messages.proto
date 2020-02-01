@@ -1,0 +1,166 @@
+syntax = "proto3";
+
+package messages;
+option go_package = "server/generated/messages";
+
+import "enums.proto";
+
+message AuthRequest {
+    string token = 1;
+}
+message AuthResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    string token = 3;
+}
+
+message SignInRequest {
+    string user_id = 1;
+    string user_pw = 2;
+}
+message SignUpRequest {
+    string name  = 1;
+    enums.SexTypes sex = 2;
+    uint32 age = 3;
+    string user_id = 4;
+    string user_pw = 5;
+}
+message SignOutRequest {
+    string token = 1;
+}
+
+message StoresRequest {
+    string token = 1;
+    enums.StoreSearchCriteria criteria = 2;
+    string serch = 3;
+    uint32 current_page = 4;
+}
+message StoresResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    repeated Store stores = 3;
+    repeated Company companies = 4;
+    uint32 pages = 5;
+    uint32 current_page = 6;
+
+    message Store {
+      uint64 id = 1;
+      string address = 2;
+    }
+    message Company {
+       uint64 id = 1;
+       string name = 2;
+    }
+}
+
+message StoreRequest {
+    string token = 1;
+    uint64 id = 2;
+}
+message StoreResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    Store store = 3;
+    Company company = 4;
+    repeated Product products = 5;
+
+    message Store {
+        uint64 id = 1;
+        string image = 2;
+        string address = 3;
+    }
+    message Company {
+        uint64 id = 1;
+        string name = 2;
+    }
+    message Product {
+        uint64 id = 1;
+        string name = 2;
+        uint32 price = 3;
+        uint32 stock = 4;
+    }
+}
+
+message ProductRequest {
+    string token = 1;
+    uint64 id = 2;
+}
+message ProductResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    uint64 id = 3;
+    string name = 4;
+    uint32 price = 5;
+    uint32 stock = 6;
+    uint32 type = 7;
+}
+
+message UserRequest {
+    string token = 1;
+}
+message UserResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    AppUser user = 3;
+    message AppUser {
+        uint64 id = 1;
+        string name = 2;
+        enums.SexTypes sex = 3;
+        uint32 age = 4;
+    }
+}
+
+message ClearingHistoryRequest {
+    string token = 1;
+}
+message ClearingHistoryResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    repeated Clearing ClearingHistory = 3;
+
+    message Clearing {
+        string date = 1;
+        Store store = 2;
+        Company company = 3;
+        repeated Product products = 4;
+        message Store {
+            uint64 id = 1;
+            string image = 2;
+            string address = 3;
+        }
+        message Company {
+            uint64 id = 1;
+            string name = 2;
+        }
+        message Product {
+            uint64 id = 1;
+            string name = 2;
+            uint32 price = 3;
+        }
+    }
+}
+
+message AuthWithQrCodeRequest {
+    string code = 1;
+}
+message AuthWithQrCodeResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    AppUser user = 3;
+    message AppUser {
+        uint64 id = 1;
+        string name = 2;
+        enums.SexTypes sex = 3;
+        uint32 age = 4;
+    }
+}
+
+message PurchaseRequest {
+    uint64 user_id  = 1;
+    uint64 store_id = 2;
+    repeated string tag = 3;
+}
+message PurchaseResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+}
