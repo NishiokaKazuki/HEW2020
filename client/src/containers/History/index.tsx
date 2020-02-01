@@ -4,11 +4,17 @@ import styled from 'styled-components'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+const useStyles = makeStyles(theme => ({
+  toolbar: theme.mixins.toolbar,
+}))
+
 const History: React.FC = () => {
+  const classes = useStyles()
   const histories = useSelector((state: any) => state.HistoryReducer.histories)
 
   return (
     <Root>
+      <div className={classes.toolbar} />
       <H1>購入履歴</H1>
       {
         histories.map((history: any, i: any) => (
