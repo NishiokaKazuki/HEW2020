@@ -3,10 +3,16 @@ import styled from 'styled-components'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+const useStyles = makeStyles(theme => ({
+    toolbar: theme.mixins.toolbar,
+}))
+
 const NotFound: React.FC = () => {
+    const classes = useStyles()
 
     return (
         <Root>
+            <div className={classes.toolbar} />
             <H1>404 Not Found</H1>
             <P>申し訳御座いません。</P>
             <P>お探しのページは見つかりませんでした。</P>

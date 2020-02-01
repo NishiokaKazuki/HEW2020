@@ -11,7 +11,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { SexTypes } from "../../class/User"
 
+const useStyles = makeStyles(theme => ({
+  toolbar: theme.mixins.toolbar,
+}))
+
 const Signup: React.FC = () => {
+  const classes = useStyles()
+
   let history = useHistory()
   const [name, setName] = React.useState("")
   const [sex, setSex] = React.useState(SexTypes.SEX_ALL)
@@ -89,6 +95,7 @@ const Signup: React.FC = () => {
 
   const unConfirmed = (
     <>
+      <div className={classes.toolbar} />
       <H1>新規会員登録</H1>
       <Table>
         <tbody>
