@@ -13,6 +13,9 @@ protoc-py:
 	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/libs/generated/grpc --grpc_python_out=./mechanical/libs/generated/grpc protobuf/messages.proto
 	python -m grpc_tools.protoc -I protobuf/ --python_out=./mechanical/libs/generated/grpc --grpc_python_out=./mechanical/libs/generated/grpc protobuf/mechanical_service.proto
 
+disable-eslint:
+	sh ./client/eslint-disable.sh
+
 docker-up:
 	docker-compose up -d
 

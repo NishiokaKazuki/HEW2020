@@ -86,15 +86,6 @@ type WebAppServiceClearingHistory = {
   readonly responseType: typeof messages_pb.ClearingHistoryResponse;
 };
 
-type WebAppServiceGetShopPlace = {
-  readonly methodName: string;
-  readonly service: typeof WebAppService;
-  readonly requestStream: false;
-  readonly responseStream: false;
-  readonly requestType: typeof messages_pb.ShopRequest;
-  readonly responseType: typeof messages_pb.ShopResponse;
-};
-
 export class WebAppService {
   static readonly serviceName: string;
   static readonly Auth: WebAppServiceAuth;
@@ -106,7 +97,6 @@ export class WebAppService {
   static readonly Store: WebAppServiceStore;
   static readonly Product: WebAppServiceProduct;
   static readonly ClearingHistory: WebAppServiceClearingHistory;
-  static readonly GetShopPlace: WebAppServiceGetShopPlace;
 }
 
 export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
@@ -221,15 +211,6 @@ export class WebAppServiceClient {
   clearingHistory(
     requestMessage: messages_pb.ClearingHistoryRequest,
     callback: (error: ServiceError|null, responseMessage: messages_pb.ClearingHistoryResponse|null) => void
-  ): UnaryResponse;
-  getShopPlace(
-    requestMessage: messages_pb.ShopRequest,
-    metadata: grpc.Metadata,
-    callback: (error: ServiceError|null, responseMessage: messages_pb.ShopResponse|null) => void
-  ): UnaryResponse;
-  getShopPlace(
-    requestMessage: messages_pb.ShopRequest,
-    callback: (error: ServiceError|null, responseMessage: messages_pb.ShopResponse|null) => void
   ): UnaryResponse;
 }
 

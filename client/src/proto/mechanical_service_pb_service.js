@@ -1,6 +1,6 @@
+/* eslint-disable */
 // package: services
 // file: mechanical_service.proto
-/* eslint-disable */
 
 var mechanical_service_pb = require("./mechanical_service_pb");
 var messages_pb = require("./messages_pb");
