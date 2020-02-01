@@ -11,13 +11,11 @@ import Menu from './Menu'
 import Share from './Share'
 
 const Header: React.FC = () => {
-    const classes = useStyles()
-
     return (
         <>
             <div>
                 <AppBar position="fixed">
-                    <Toolbar className={classes.toolbar}>
+                    <Toolbar>
                         <Menu />
                         <StyledLink to="/">
                             <GitHubIcon />自動販売機
@@ -35,9 +33,5 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     color: white;
 `
-
-const useStyles = makeStyles(theme => ({
-    toolbar: theme.mixins.toolbar,
-}))
 
 export default Header

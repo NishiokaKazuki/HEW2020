@@ -24,7 +24,7 @@ const HistoryReducer = (state: iState = initialState, action: Actions) => {
     switch (action.type) {
         case actionTypes.SET_HISTORY:
             return Object.assign({}, state, {
-                state: action.payload.histories
+                histories: action.payload.histories
             })
     }
 

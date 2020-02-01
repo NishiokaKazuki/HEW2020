@@ -19,7 +19,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import User from '../../class/User'
 
 const Menu: React.FC = () => {
-    const classes = useStyles()
     const dispatch = useDispatch()
     const drawerOpen = useSelector((state: any) => state.DrawerReducer.drawerOpen)
     const userName = useSelector((state: any) => state.UserReducer.name)
@@ -49,9 +48,6 @@ const Menu: React.FC = () => {
                         ModalProps={{
                             keepMounted: true, // Better open performance on mobile.
                         }}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
                     >
                         <StyledList><ListItem><StyledText>{User.get('token') ? userName + "様" : "ゲスト様"}</StyledText></ListItem></StyledList>
                         <Divider />
@@ -62,13 +58,6 @@ const Menu: React.FC = () => {
         </div>
     )
 }
-
-const useStyles = makeStyles(theme => ({
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-        width: '70%'
-    }
-}))
 
 const StyledList = styled(List)`
     background-color: #ddd;

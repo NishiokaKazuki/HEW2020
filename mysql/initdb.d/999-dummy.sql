@@ -78,7 +78,7 @@ INSERT INTO rfid_tags(product_id, rfid_code, sold) VALUES
     (4, '4444448', 0),
     (4, '4444449', 0);
 
-DELETE FROM producu_stocks;
+DELETE FROM product_stocks;
 
 INSERT INTO product_stocks(store_id, product_id, stock) VALUES
     (1, 2, 10),
