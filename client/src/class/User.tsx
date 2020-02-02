@@ -4,7 +4,6 @@ import { SignInRequest } from "../proto/messages_pb"
 import { SignOutRequest } from "../proto/messages_pb"
 import { UserRequest } from "../proto/messages_pb"
 import { ClearingHistoryRequest } from "../proto/messages_pb"
-import * as actions from "../actions"
 
 export enum SexTypes {
     SEX_ALL = 0,
@@ -144,7 +143,6 @@ class User {
      */
     public historyRequest = (token: any) => {
         return new Promise(resolve => {
-            var ret: any
             const req = new ClearingHistoryRequest()
             req.setToken(token)
 
@@ -175,7 +173,7 @@ class User {
                     }
 
                     // 商品用の配列
-                    let products = new Array()
+                    let products = []
                     let sum: number = 0
 
                     // 商品と総額を追加

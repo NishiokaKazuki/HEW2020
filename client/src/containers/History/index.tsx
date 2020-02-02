@@ -29,11 +29,10 @@ const History: React.FC = () => {
         {
           histories.map((history: any, i: any) => (
             <>
-              <TreeItem nodeId={i} label={history.date}>
-                <label>{history.store.address} {history.company.name} {history.sum}</label>
-                {history.products.map((product: any, i: any) => (
+              <TreeItem key={i} nodeId={i} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
+                {history.products.map((product: any, j: any) => (
                   <>
-                    <TreeItem nodeId={i} label={product.name}>
+                    <TreeItem key={i} nodeId={i} label={`${product.name}　　` + `¥${product.price}`}>
                     </TreeItem>
                   </>
                 ))}
