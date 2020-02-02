@@ -3,13 +3,15 @@ import { useDispatch } from 'react-redux'
 import requestApi from '../../utils/requestApi'
 import styled from 'styled-components'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
 import GoogleMapReact from 'google-map-react'
 import { Me, Pin } from '../../components/MapIcons'
 
-const useStyles = makeStyles(theme => ({
-  toolbar: theme.mixins.toolbar,
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
 }))
 
 interface iCenter {

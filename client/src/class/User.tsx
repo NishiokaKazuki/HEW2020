@@ -154,15 +154,11 @@ class User {
                     throw err
                 }
 
+                // 購入履歴用の配列
+                let histories = new Array(res.getClearinghistoryList().length)
                 // 購入履歴の取得
                 const clearingHistories = res.getClearinghistoryList()
-
-                // 購入履歴用の配列
-                let histories = new Array(clearingHistories.length)
-                // 商品購入履歴用の配列
-                let products = new Array()
-
-                // historiesに値を代入
+                // 購入履歴に値を代入
                 for (let i = 0; i < clearingHistories.length; i++) {
                     // 購入日、店舗、会社を追加
                     histories[i] = {
@@ -177,18 +173,25 @@ class User {
                             name: clearingHistories[i].getCompany().getName()
                         }
                     }
-                    // 購入商品一覧を作成
+
+                    // 商品用の配列
+                    let products = new Array()
+                    let sum: number = 0
+
+                    // 商品と総額を追加
                     for (let j = 0; j < clearingHistories[i].getProductsList().length; j++) {
                         products[j] = {
                             id: clearingHistories[i].getProductsList()[j].getId(),
                             name: clearingHistories[i].getProductsList()[j].getName(),
                             price: clearingHistories[i].getProductsList()[j].getPrice()
                         }
+                        sum += clearingHistories[i].getProductsList()[j].getPrice()
                     }
-                    // 購入履歴に購入商品一覧を追加
+
+                    // 購入履歴に商品と総額を追加
                     histories[i]['products'] = products
+                    histories[i]['sum'] = sum
                 }
-                console.log(histories)
                 resolve(histories)
             })
         })

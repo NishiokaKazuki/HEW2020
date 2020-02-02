@@ -7,12 +7,14 @@ import { useHistory } from "react-router-dom"
 import * as actions from '../../actions'
 import * as actionTypes from "../../utils/actionTypes"
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
 import { SexTypes } from "../../class/User"
 
-const useStyles = makeStyles(theme => ({
-  toolbar: theme.mixins.toolbar,
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
 }))
 
 const Signup: React.FC = () => {
@@ -75,6 +77,7 @@ const Signup: React.FC = () => {
   }
 
   const handleSignup = () => {
+    // エラーチェック
     if (name == "") {
       return dispatch(actions.setNotification('error', '名前を入力してください'))
     } else if (sex == null) {
@@ -207,6 +210,7 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `
+
 const Table = styled.table`
   width: 100%;
   margin-left: 10px;
