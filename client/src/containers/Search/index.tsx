@@ -3,10 +3,16 @@ import { useDispatch } from 'react-redux'
 import requestApi from '../../utils/requestApi'
 import styled from 'styled-components'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
 import GoogleMapReact from 'google-map-react'
 import { Me, Pin } from '../../components/MapIcons'
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+}))
 
 interface iCenter {
   lat: number,
@@ -14,6 +20,7 @@ interface iCenter {
 }
 
 const Search: React.FC = () => {
+  const classes = useStyles()
   const [shop, setShop] = React.useState()
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
@@ -33,7 +40,7 @@ const Search: React.FC = () => {
 
   return (
     <Root>
-      <div id="map"></div>
+      <div className={classes.toolbar} />
       <H1>店舗検索</H1>
 
       <GoogleMapWrapper>

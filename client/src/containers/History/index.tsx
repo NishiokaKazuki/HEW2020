@@ -2,29 +2,44 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import TreeView from '@material-ui/lab/TreeView'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import TreeItem from '@material-ui/lab/TreeItem'
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+}))
 
 const History: React.FC = () => {
+  const classes = useStyles()
   const histories = useSelector((state: any) => state.HistoryReducer.histories)
 
   return (
     <Root>
+      <div className={classes.toolbar} />
       <H1>購入履歴</H1>
-      {
-        histories.map((history: any, i: any) => (
-          <>
-            <section key={i}>
-              <h1>{history.date}</h1>
-              {history.products.map((product: any, i: any) => (
-                <>
-                  <p>{product.name} ¥{product.price}</p>
-                </>
+      <TreeView
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+      >
+        {histories.map((history: any, i: string) => (
+          <React.Fragment key={i}>
+            <TreeItem nodeId={i + ''} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
+              {history.products.map((product: any, j: string) => (
+                <React.Fragment key={j}>
+                  <TreeItem nodeId={j + ''} label={`${product.name}　　` + `¥${product.price}`}>
+                  </TreeItem>
+                </React.Fragment>
               ))}
-            </section>
-          </>
-        ))
-      }
-    </Root>
+            </TreeItem>
+          </React.Fragment>
+        ))}
+      </TreeView>
+    </Root >
   )
 }
 

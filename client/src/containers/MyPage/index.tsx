@@ -2,9 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import QRCode from "qrcode.react"
 import User from "../../class/User"
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+}))
 
 const MyPage: React.FC = () => {
+  const classes = useStyles()
   const [display, setDisplay] = React.useState(false)
   const token: any = User.get('token')
 
@@ -20,6 +27,7 @@ const MyPage: React.FC = () => {
 
   return (
     <Root>
+      <div className={classes.toolbar} />
       <H1>マイページ</H1>
       <P>あなたのQRコード</P>
       {

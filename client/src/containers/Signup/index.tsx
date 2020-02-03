@@ -1,17 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 
 import * as actions from '../../actions'
-import * as actionTypes from "../../utils/actionTypes"
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
 import { SexTypes } from "../../class/User"
 
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+}))
+
 const Signup: React.FC = () => {
+  const classes = useStyles()
+
   let history = useHistory()
   const [name, setName] = React.useState("")
   const [sex, setSex] = React.useState(SexTypes.SEX_ALL)
@@ -54,11 +61,11 @@ const Signup: React.FC = () => {
           break
       }
 
-      if (name == "") {
+      if (name === "") {
         return dispatch(actions.setNotification('error', '名前を入力してください'))
-      } else if (id == "") {
+      } else if (id === "") {
         return dispatch(actions.setNotification('error', 'ユーザIDを入力してください'))
-      } else if (pw == "") {
+      } else if (pw === "") {
         return dispatch(actions.setNotification('error', 'パスワードを入力してください'))
       } else {
         setConfirmed(true)
@@ -69,15 +76,16 @@ const Signup: React.FC = () => {
   }
 
   const handleSignup = () => {
-    if (name == "") {
+    // エラーチェック
+    if (name === "") {
       return dispatch(actions.setNotification('error', '名前を入力してください'))
     } else if (sex == null) {
       return dispatch(actions.setNotification('error', '性別を入力してください'))
     } else if (age == null) {
       return dispatch(actions.setNotification('error', '年齢を入力してください'))
-    } else if (id == "") {
+    } else if (id === "") {
       return dispatch(actions.setNotification('error', 'ユーザIDを入力してください'))
-    } else if (pw == "") {
+    } else if (pw === "") {
       return dispatch(actions.setNotification('error', 'パスワードを入力してください'))
     } else {
       dispatch(actions.signup({ name, sex, age, id, pw }))
@@ -89,6 +97,7 @@ const Signup: React.FC = () => {
 
   const unConfirmed = (
     <>
+      <div className={classes.toolbar} />
       <H1>新規会員登録</H1>
       <Table>
         <tbody>
@@ -200,6 +209,7 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `
+
 const Table = styled.table`
   width: 100%;
   margin-left: 10px;

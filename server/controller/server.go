@@ -289,10 +289,6 @@ func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHisto
 	}, status.Error(codes.OK, "")
 }
 
-func (s *server) GetShopPlace(ctx context.Context, in *messages.ShopRequest) (*messages.ShopResponse, error) {
-	return nil, nil
-}
-
 func StartingServer(port string) {
 	listenPort, err := net.Listen("tcp", port)
 	if err != nil {

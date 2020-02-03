@@ -1,12 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  toolbar: {
+    ...theme.mixins.toolbar
+  },
+}))
+
 const About: React.FC = () => {
+  const classes = useStyles()
+
   return (
     <Root>
+      <div className={classes.toolbar} />
       <H1>About</H1>
       <StyledPaper>
         <section>

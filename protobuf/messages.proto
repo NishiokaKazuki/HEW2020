@@ -164,3 +164,12 @@ message PurchaseResponse {
     bool status = 1;
     enums.StatusCodes status_code = 2;
 }
+
+message ShopRequest {
+    string keyword = 1;
+    double lat = 2;
+    double lng = 3;
+}
+message ShopResponse {
+    string shop = 1;
+}
