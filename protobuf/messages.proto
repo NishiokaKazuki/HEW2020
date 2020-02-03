@@ -12,6 +12,13 @@ message AuthResponse {
     bool status = 1;
     enums.StatusCodes status_code = 2;
     string token = 3;
+    AppUser user = 4;
+    message AppUser {
+        uint64 id = 1;
+        string name = 2;
+        enums.SexTypes sex = 3;
+        uint32 age = 4;
+    }
 }
 
 message SignInRequest {
@@ -165,11 +172,14 @@ message PurchaseResponse {
     enums.StatusCodes status_code = 2;
 }
 
-message ShopRequest {
-    string keyword = 1;
-    double lat = 2;
-    double lng = 3;
+message StorePlaceRequest {
+    string token = 1;
+    string keyword = 2;
+    double lat = 3;
+    double lng = 4;
 }
-message ShopResponse {
-    string shop = 1;
+message StorePlaceResponse {
+    bool status = 1;
+    enums.StatusCodes status_code = 2;
+    string store = 3;
 }

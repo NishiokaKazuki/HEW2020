@@ -45,12 +45,34 @@ func (s *server) SignIn(ctx context.Context, in *messages.SignInRequest) (*messa
 		}, status.Error(codes.ResourceExhausted, err.Error()) // wip:ResourceExhausted
 	}
 
-	utils.GenerateQrCode(token)
+	id, err := Auth(ctx, token)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+			User:       &messages.AuthResponse_AppUser{},
+		}, status.Error(codes.Unauthenticated, err.Error())
+	}
+
+	user, err = query.GetUser(ctx, id)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+			User:       &messages.AuthResponse_AppUser{},
+		}, status.Error(codes.NotFound, err.Error())
+	}
 
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		Token:      token,
+		User: &messages.AuthResponse_AppUser{
+			Id:   user.Id,
+			Name: user.Name,
+			Sex:  user.Sex,
+			Age:  user.Age,
+		},
 	}, status.Error(codes.OK, "")
 }
 
@@ -78,10 +100,34 @@ func (s *server) SignUp(ctx context.Context, in *messages.SignUpRequest) (*messa
 		}, status.Error(codes.ResourceExhausted, err.Error())
 	}
 
+	id, err := Auth(ctx, token)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+			User:       &messages.AuthResponse_AppUser{},
+		}, status.Error(codes.Unauthenticated, err.Error())
+	}
+
+	user, err = query.GetUser(ctx, id)
+	if err != nil {
+		return &messages.AuthResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+			User:       &messages.AuthResponse_AppUser{},
+		}, status.Error(codes.NotFound, err.Error())
+	}
+
 	return &messages.AuthResponse{
 		Status:     true,
 		StatusCode: enums.StatusCodes_SUCCESS,
 		Token:      token,
+		User: &messages.AuthResponse_AppUser{
+			Id:   user.Id,
+			Name: user.Name,
+			Sex:  user.Sex,
+			Age:  user.Age,
+		},
 	}, status.Error(codes.OK, "")
 }
 
@@ -227,6 +273,10 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 		Price:      product.Price,
 		Type:       product.Type,
 	}, status.Error(codes.OK, "")
+}
+
+func (s *server) StorePlace(ctx context.Context, in *messages.StorePlaceRequest) (*messages.StorePlaceResponse, error) {
+	return nil, nil
 }
 
 func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHistoryRequest) (*messages.ClearingHistoryResponse, error) {
