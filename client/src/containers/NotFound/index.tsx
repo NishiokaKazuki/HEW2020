@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
-    toolbar: theme.mixins.toolbar,
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    toolbar: {
+        ...theme.mixins.toolbar
+    },
 }))
 
 const NotFound: React.FC = () => {

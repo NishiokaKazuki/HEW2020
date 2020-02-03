@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import * as actions from '../../actions'
 import * as actionTypes from "../../utils/actionTypes"
 
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'

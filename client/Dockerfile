@@ -1,4 +1,4 @@
-FROM  node:latest
+FROM node:latest
 
 WORKDIR /HEW2020/client
 COPY . .
