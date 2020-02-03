@@ -26,20 +26,18 @@ const History: React.FC = () => {
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
       >
-        {
-          histories.map((history: any, i: any) => (
-            <>
-              <TreeItem key={i} nodeId={i} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
-                {history.products.map((product: any, j: any) => (
-                  <>
-                    <TreeItem key={i} nodeId={i} label={`${product.name}　　` + `¥${product.price}`}>
-                    </TreeItem>
-                  </>
-                ))}
-              </TreeItem>
-            </>
-          ))
-        }
+        {histories.map((history: any, i: string) => (
+          <React.Fragment key={i}>
+            <TreeItem nodeId={i + ''} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
+              {history.products.map((product: any, j: string) => (
+                <React.Fragment key={j}>
+                  <TreeItem nodeId={j + ''} label={`${product.name}　　` + `¥${product.price}`}>
+                  </TreeItem>
+                </React.Fragment>
+              ))}
+            </TreeItem>
+          </React.Fragment>
+        ))}
       </TreeView>
     </Root >
   )
