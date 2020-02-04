@@ -2,18 +2,27 @@ package controller
 
 import (
 	"context"
+	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
+	"net/url"
+	"server/configs"
 	"server/controller/query"
 	"server/controller/utils"
 	"server/generated/enums"
 	"server/generated/messages"
 	pb "server/generated/services"
 	"server/model/table"
+	"strconv"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+)
+
+const (
+	confpath = "configs/config.toml"
 )
 
 type server struct{}
@@ -276,7 +285,48 @@ func (s *server) Product(ctx context.Context, in *messages.ProductRequest) (*mes
 }
 
 func (s *server) StorePlace(ctx context.Context, in *messages.StorePlaceRequest) (*messages.StorePlaceResponse, error) {
-	return nil, nil
+
+	_, err := Auth(ctx, in.Token)
+	if err != nil {
+		return &messages.StorePlaceResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED_AUTH,
+		}, status.Error(codes.Unauthenticated, err.Error())
+	}
+
+	location := strconv.FormatFloat(in.Lat, 'f', 4, 64) + "," + strconv.FormatFloat(in.Lng, 'f', 4, 64)
+
+	config, err := configs.ReadGooglePlaceConfig(confpath)
+
+	values := url.Values{}
+	values.Add("key", config.Key)
+	values.Add("location", location)
+	values.Add("radius", "10000")
+	values.Add("types", config.Types)
+	values.Add("language", "ja")
+
+	res, err := http.Get("//maps.googleapis.com/maps/api/place/textsearch/json" + "?" + values.Encode())
+	if err != nil {
+		return &messages.StorePlaceResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, status.Error(codes.Unimplemented, err.Error())
+	}
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return &messages.StorePlaceResponse{
+			Status:     false,
+			StatusCode: enums.StatusCodes_FAILED,
+		}, status.Error(codes.Unimplemented, err.Error())
+	}
+
+	return &messages.StorePlaceResponse{
+		Status:     true,
+		StatusCode: enums.StatusCodes_SUCCESS,
+		Store:      string(body),
+	}, status.Error(codes.OK, "")
 }
 
 func (s *server) ClearingHistory(ctx context.Context, in *messages.ClearingHistoryRequest) (*messages.ClearingHistoryResponse, error) {

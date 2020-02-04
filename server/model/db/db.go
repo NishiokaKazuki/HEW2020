@@ -1,10 +1,15 @@
 package db
 
 import (
-	"server/configs"
 	"fmt"
+	"server/configs"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+)
+
+const (
+	configpath = "configs/config.toml"
 )
 
 var db = GormConnect()
@@ -25,7 +30,7 @@ func GormConnect() *gorm.DB {
 }
 
 func GetDBConfig() (string, string) {
-	conf, err := configs.ReadDBConfig("configs/config.toml")
+	conf, err := configs.ReadDBConfig(configpath)
 	if err != nil {
 		panic(err.Error())
 	}
