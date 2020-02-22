@@ -21,7 +21,7 @@ interface iCenter {
 
 const Search: React.FC = () => {
   const classes = useStyles()
-  const [shop, setShop] = React.useState()
+  const [shops, setShop] = React.useState()
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
   const center: iCenter = { lat: lat, lng: lng }
@@ -56,7 +56,14 @@ const Search: React.FC = () => {
             lat={lat}
             lng={lng}
           />
-          {/* <Pin>とshopをmap()で回す */}
+          {/* <Pin>とshopsをmap()で回す */}
+          {shops.map((shop: any, i: string) => (
+            <Pin
+              key={i}
+              lat={shop.lat}
+              lng={shop.lng}
+            />
+          ))}
         </GoogleMapReact>
       </GoogleMapWrapper>
     </Root>

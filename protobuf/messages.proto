@@ -172,13 +172,12 @@ message PurchaseResponse {
     enums.StatusCodes status_code = 2;
 }
 
-message StorePlaceRequest {
+message ShopRequest {
     string token = 1;
-    string keyword = 2;
-    double lat = 3;
-    double lng = 4;
+    double lat = 2;
+    double lng = 3;
 }
-message StorePlaceResponse {
+message ShopResponse {
     bool status = 1;
     enums.StatusCodes status_code = 2;
     string store = 3;
