@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import requestApi from '../../utils/requestApi'
+import requestApi from '../../helper/requestApi'
 import styled from 'styled-components'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'

@@ -19,7 +19,6 @@ const requestApi = (lat: number, lng: number): any => {
             if (err || res === null) {
                 throw err
             }
-
             resolve(res)
         })
     })
