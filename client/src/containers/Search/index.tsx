@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import requestApi from '../../helper/requestApi'
 import styled from 'styled-components'
-
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-
 import GoogleMapReact from 'google-map-react'
 import { Me, Pin } from '../../components/MapIcons'
+import requestApi from '../../helper/requestApi'
+import apiKey from '../../config/googleMap'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: {
@@ -21,7 +20,7 @@ interface iCenter {
 
 const Search: React.FC = () => {
   const classes = useStyles()
-  const [shops, setShop] = React.useState()
+  const [shops, setShops] = React.useState()
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
   const center: iCenter = { lat: lat, lng: lng }
@@ -30,11 +29,13 @@ const Search: React.FC = () => {
     navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude
       const lng = pos.coords.longitude
-      const res = requestApi(lat, lng)
-
-      setShop(res.results)
-      setLat(lat)
-      setLng(lng)
+      setLat(lat);
+      setLng(lng);
+      (async () => {
+        const res = await requestApi(lat, lng)
+        setShops(JSON.parse(res.getStore()))
+        console.log(res)
+      })()
     })
   })
 
@@ -46,7 +47,7 @@ const Search: React.FC = () => {
       <GoogleMapWrapper>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: 'AIzaSyDXmfufz94HbjCTfGwUBF4TCIwJ2_j-KW8'
+            key: apiKey
           }}
           center={center}
           defaultZoom={15}
@@ -57,13 +58,7 @@ const Search: React.FC = () => {
             lng={lng}
           />
           {/* <Pin>とshopsをmap()で回す */}
-          {shops.map((shop: any, i: string) => (
-            <Pin
-              key={i}
-              lat={shop.lat}
-              lng={shop.lng}
-            />
-          ))}
+          {console.log(shops)}
         </GoogleMapReact>
       </GoogleMapWrapper>
     </Root>
@@ -73,11 +68,9 @@ const Search: React.FC = () => {
 const Root = styled.div`
   padding-bottom: 50px;
 `
-
 const H1 = styled.h1`
   text-align: center;
 `
-
 const GoogleMapWrapper = styled.div`
   margin: 0 auto;
 `

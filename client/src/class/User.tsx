@@ -58,7 +58,6 @@ class User {
                 if (err || res === null) {
                     throw err
                 }
-                console.log(res)
                 resolve(res)
             })
         })

@@ -21,23 +21,24 @@ const History: React.FC = () => {
   return (
     <Root>
       <div className={classes.toolbar} />
-      <H1>購入履歴</H1>
+      <H1>一ヶ月の購入履歴</H1>
       <TreeView
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
       >
-        {histories.map((history: any, i: string) => (
-          <React.Fragment key={i}>
-            <TreeItem nodeId={i + ''} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
-              {history.products.map((product: any, j: string) => (
-                <React.Fragment key={j}>
-                  <TreeItem nodeId={j + ''} label={`${product.name}　　` + `¥${product.price}`}>
-                  </TreeItem>
-                </React.Fragment>
-              ))}
-            </TreeItem>
-          </React.Fragment>
-        ))}
+        {histories.length === 0 ? <P>購入した商品はありません</P> :
+          histories.map((history: any, i: string) => (
+            <React.Fragment key={i}>
+              <TreeItem nodeId={i + ''} label={`${history.date}　` + `${history.store.address}　` + `${history.company.name}　` + `¥${history.sum}`}>
+                {history.products.map((product: any, j: string) => (
+                  <React.Fragment key={j}>
+                    <TreeItem nodeId={j + ''} label={`${product.name}　　` + `¥${product.price}`}>
+                    </TreeItem>
+                  </React.Fragment>
+                ))}
+              </TreeItem>
+            </React.Fragment>
+          ))}
       </TreeView>
     </Root >
   )
@@ -46,8 +47,10 @@ const History: React.FC = () => {
 const Root = styled.div`
   padding-bottom: 50px;
 `
-
 const H1 = styled.h1`
+  text-align: center;
+`
+const P = styled.p`
   text-align: center;
 `
 
