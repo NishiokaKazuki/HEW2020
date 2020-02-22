@@ -46,7 +46,7 @@ const Search: React.FC = () => {
       <GoogleMapWrapper>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: 'AIzaSyDXmfufz94HbjCTfGwUBF4TCIwJ2_j-KW8'
+            key: '*****'
           }}
           center={center}
           defaultZoom={15}
