@@ -4,7 +4,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import GoogleMapReact from 'google-map-react'
 import { Me, Pin } from '../../components/MapIcons'
 import requestApi from '../../helper/requestApi'
-import apiKey from '../../config/googleMap'
+import key from '../../config/map'
 import User from '../../class/User'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -56,7 +56,7 @@ const Search: React.FC = () => {
       <GoogleMapWrapper>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: apiKey
+            key: key
           }}
           center={center}
           defaultZoom={15}
