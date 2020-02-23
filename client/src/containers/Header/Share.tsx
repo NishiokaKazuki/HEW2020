@@ -47,7 +47,7 @@ const ShareDialog: React.FC<Props> = props => {
     // シェアボタン用
     const title: string = "自動販売機"
     const shareUrl: string = "自動販売機"
-    const hashTag: string[] = ['自動販売機', 'ロボット学科', '043教室', 'HEW2020', 'ロボラボ']
+    const hashTag: string[] = ['HEW2020', 'ロボット学科', '043教室', '自動販売機']
 
     return (
         <Dialog

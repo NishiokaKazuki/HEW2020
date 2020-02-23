@@ -20,7 +20,10 @@ const About: React.FC = () => {
       <StyledPaper>
         <section>
           <H1>自動販売機とは</H1>
-          <p>自動販売機です。ほげほげほげほげほげほげほげほげほげほげほげほげ</p>
+          <p>
+            キャッシュレス型の「無人コンビニ」です。<br/>
+            お客様は本アプリにご登録後、商品を手にとって退店するだけで決済が完了致します。
+          </p>
         </section>
       </StyledPaper>
       <StyledPaper>
@@ -41,9 +44,14 @@ const About: React.FC = () => {
             <li>Docker</li>
             <li>Kubernetes</li>
           </ul>
+          <H2>ハードウェア：</H2>
+          <ul>
+            <li>Python</li>
+          </ul>
           <H2>Web API：</H2>
           <ul>
             <li>Google Maps</li>
+            <li>Google Places</li>
           </ul>
           <H2>その他技術：</H2>
           <ul>
@@ -53,7 +61,7 @@ const About: React.FC = () => {
       </StyledPaper>
       <StyledPaper>
         <section>
-          <H1>プロフィール</H1>
+          <H1>開発者のプロフィール</H1>
           <FlexDiv>
             <Div>
               <H2>バックエンド</H2>

@@ -6,6 +6,7 @@ import { Me, Pin } from '../../components/MapIcons'
 import requestApi from '../../helper/requestApi'
 import key from '../../config/map'
 import User from '../../class/User'
+import { Card, CardContent } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: {
@@ -38,6 +39,7 @@ const Search: React.FC = () => {
           .then((res: { getStore: () => string }) => {
             const shopRes = JSON.parse(res.getStore())
             setShops(shopRes.results)
+            console.log(shopRes.results)
           })
           .catch((e: any) => {
             console.log(e)
@@ -75,6 +77,18 @@ const Search: React.FC = () => {
           ))}
         </GoogleMapReact>
       </GoogleMapWrapper>
+      <div>
+        {
+          shops.map((shop: any, i: any) => (
+            <StyledCard key={i}>
+              <CardContent>
+                <h2>{shop.name}</h2>
+                <p>{shop.formatted_address}</p>
+              </CardContent>
+            </StyledCard>
+          ))
+        }
+      </div>
     </Root>
   )
 }
@@ -84,14 +98,19 @@ const Root = styled.div`
 `
 const GoogleMapWrapper = styled.div`
   margin: 0 auto;
-  width: 500px;
-  height: 500px;
+  width: 90%;
+  height: 450px;
 `
 const H1 = styled.h1`
   text-align: center;
 `
 const P = styled.p`
   text-align: center;
+`
+
+const StyledCard= styled(Card)`
+  margin: 20px auto;
+  margin: 20px 20px;
 `
 
 export default Search
