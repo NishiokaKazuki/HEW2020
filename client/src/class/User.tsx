@@ -47,19 +47,18 @@ class User {
     public signupRequest = (args: iSignup) => {
         return new Promise(resolve => {
             const req = new SignUpRequest()
-            const client = new WebAppServiceClient("http://localhost:8080", {})
-
             req.setName(args.name)
             req.setSex(args.sex)
             req.setAge(args.age)
             req.setUserId(args.id)
             req.setUserPw(args.pw)
 
+            const client = new WebAppServiceClient("http://localhost:8080", {})
             client.signUp(req, (err: any, res: any) => {
                 if (err || res === null) {
                     throw err
                 }
-                resolve(this.set('token', res.getToken()))
+                resolve(res)
             })
         })
     }
@@ -81,7 +80,7 @@ class User {
                 if (err || res === null) {
                     throw err
                 }
-                resolve(this.set('token', res.getToken()))
+                resolve(res)
             })
         })
     }
@@ -115,7 +114,6 @@ class User {
      */
     public userRequest = (token: any) => {
         return new Promise(resolve => {
-            var ret: any
             const req = new UserRequest()
             req.setToken(token)
 
@@ -124,7 +122,7 @@ class User {
                 if (err || res === null) {
                     throw err
                 }
-                ret = {
+                const ret = {
                     id: res.getUser().getId(),
                     name: res.getUser().getName(),
                     sex: res.getUser().getSex(),

@@ -48,69 +48,78 @@ export const unAuthenticateUser = () => ({
     type: actionTypes.UNAUTHENTICATE_USER
 })
 
-// 認証関係
+// 新規会員登録
 export const signup = (signupProps: iSignup) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
-
-            User.signupRequest(signupProps)
-            await User.userRequest(User.get('token'))
-
+            const res: any = await User.signupRequest(signupProps)
+            dispatch(setUser(
+                res.getUser().getId(),
+                res.getUser().getName(),
+                res.getUser().getSex(),
+                res.getUser().getAge()
+            ))
+            User.set('token', res.getToken())
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
+            dispatch({ type: actionTypes.CLOSE_LOGIN_DIALOG })
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
             dispatch(setNotification('success', 'サインアップ成功！'))
         } catch (e) {
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
-            dispatch(setNotification('error', 'エラーが発生しました！'))
+            dispatch(setNotification('error', 'サインアップ失敗！'))
         }
     }
 }
+// ログイン処理
 export const jwtLogin = (loginProps: iLogin) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
-
-            // TODO: レスポンスにユーザーも返してもらう
-            User.loginRequest(loginProps)
-            await User.userRequest(User.get('token'))
-
-
+            const res: any = await User.loginRequest(loginProps)
+            dispatch(setUser(
+                res.getUser().getId(),
+                res.getUser().getName(),
+                res.getUser().getSex(),
+                res.getUser().getAge()
+            ))
+            User.set('token', res.getToken())
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
             dispatch({ type: actionTypes.CLOSE_LOGIN_DIALOG })
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
             dispatch(setNotification('success', 'ログイン成功！'))
         } catch (e) {
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
-            dispatch(setNotification('error', 'エラーが発生しました！'))
+            dispatch(setNotification('error', 'ログイン失敗！'))
         }
     }
 }
+// ログアウト処理
 export const jwtLogout = (token: any) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
             await User.logoutRequest(token)
-
+            localStorage.clear()
             dispatch({ type: actionTypes.UNAUTHENTICATE_USER })
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
             dispatch(setNotification('success', 'ログアウト成功！'))
         } catch (e) {
+            localStorage.clear()
+            dispatch({ type: actionTypes.UNAUTHENTICATE_USER })
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
-            dispatch(setNotification('error', 'エラーが発生しました！'))
+            dispatch(setNotification('success', 'ログアウト成功！'))
         }
     }
 }
 
-// ユーザ関係
+// ユーザ情報の取得
 export const getUser = (token: any) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
-
             const res: any = await User.userRequest(token)
             dispatch(setUser(res.id, res.name, res.sex, res.age))
-
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
         } catch (e) {
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
@@ -118,6 +127,7 @@ export const getUser = (token: any) => {
         }
     }
 }
+// ユーザ情報の保存
 export const setUser = (id: string, name: string, sex: string, age: number) => ({
     type: actionTypes.SET_USER,
     payload: {
@@ -128,7 +138,6 @@ export const setUser = (id: string, name: string, sex: string, age: number) => (
     }
 })
 
-// 購入履歴
 export interface iStore {
     id: number,
     image: string,
@@ -143,15 +152,13 @@ export type Product = {
     name: string,
     price: number
 }
-
+// 購入履歴取得
 export const getHistory = (token: any) => {
     return async (dispatch: Dispatch<Action>) => {
         try {
             dispatch({ type: actionTypes.START_REQUEST })
-
             const histories: any = await User.historyRequest(token)
             dispatch(setHistory(histories))
-
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
         } catch (e) {
             dispatch({ type: actionTypes.COMPLETE_REQUEST })
@@ -159,6 +166,7 @@ export const getHistory = (token: any) => {
         }
     }
 }
+// 購入履歴保存
 export const setHistory = (histories: any) => ({
     type: actionTypes.SET_HISTORY,
     payload: {
