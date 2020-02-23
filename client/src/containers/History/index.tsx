@@ -1,12 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import styled from 'styled-components'
+import React, { useEffect } from 'react'
 
+import { useSelector, useDispatch } from 'react-redux'
+import * as actions from '../../actions'
+
+import styled from 'styled-components'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
+
+import User from '../../class/User'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: {
@@ -16,7 +20,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const History: React.FC = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const histories = useSelector((state: any) => state.HistoryReducer.histories)
+  const token = User.get('token')
+  let isChanged = true
+
+  useEffect(() => {
+    dispatch(actions.getHistory(token))
+  }, [isChanged])
 
   return (
     <Root>

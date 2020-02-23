@@ -24,6 +24,7 @@ const Search: React.FC = () => {
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
   const center: iCenter = { lat: lat, lng: lng }
+  const token = User.get('token')
   let isChanged = true
 
   useEffect(() => {
@@ -33,7 +34,6 @@ const Search: React.FC = () => {
       setLat(lat);
       setLng(lng);
       (async () => {
-        const token = User.get('token')
         await requestApi(token, lat, lng)
           .then((res: { getStore: () => string }) => {
             const shopRes = JSON.parse(res.getStore())
