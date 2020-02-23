@@ -6,6 +6,8 @@ import GoogleMapReact from 'google-map-react'
 import { Me, Pin } from '../../components/MapIcons'
 import requestApi from '../../helper/requestApi'
 import apiKey from '../../config/googleMap'
+import User from '../../class/User'
+import { closeNotification } from '../../actions'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: {
@@ -32,9 +34,15 @@ const Search: React.FC = () => {
       setLat(lat);
       setLng(lng);
       (async () => {
-        const res = await requestApi(lat, lng)
-        setShops(JSON.parse(res.getStore()))
-        console.log(res)
+        const token = User.get('token')
+        await requestApi(token, lat, lng)
+          .then((res: { getStore: () => string }) => {
+            setShops(JSON.parse(res.getStore()))
+            console.log(res)
+          })
+          .catch((e: any) => {
+            console.log(e)
+          })
       })()
     })
   })
