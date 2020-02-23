@@ -35,6 +35,9 @@ docker-rm:
 	docker-compose rm -f &&\
 	rm -rf mysql/data/*
 
+docker-build:
+	docker-compose build
+
 docker-ps:
 	docker-compose ps
 
