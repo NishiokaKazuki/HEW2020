@@ -305,7 +305,7 @@ func (s *server) StorePlace(ctx context.Context, in *messages.StorePlaceRequest)
 	values.Add("types", config.Types)
 	values.Add("language", "ja")
 
-	res, err := http.Get("//maps.googleapis.com/maps/api/place/textsearch/json" + "?" + values.Encode())
+	res, err := http.Get("https://maps.googleapis.com/maps/api/place/textsearch/json" + "?" + values.Encode())
 	if err != nil {
 		return &messages.StorePlaceResponse{
 			Status:     false,

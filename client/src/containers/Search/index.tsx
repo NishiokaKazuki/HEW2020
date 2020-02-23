@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import GoogleMapReact from 'google-map-react'
@@ -7,7 +6,6 @@ import { Me, Pin } from '../../components/MapIcons'
 import requestApi from '../../helper/requestApi'
 import apiKey from '../../config/googleMap'
 import User from '../../class/User'
-import { closeNotification } from '../../actions'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   toolbar: {
@@ -22,10 +20,11 @@ interface iCenter {
 
 const Search: React.FC = () => {
   const classes = useStyles()
-  const [shops, setShops] = React.useState()
+  const [shops, setShops] = React.useState([])
   const [lat, setLat] = React.useState(0)
   const [lng, setLng] = React.useState(0)
   const center: iCenter = { lat: lat, lng: lng }
+  let isChanged = true
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -37,21 +36,23 @@ const Search: React.FC = () => {
         const token = User.get('token')
         await requestApi(token, lat, lng)
           .then((res: { getStore: () => string }) => {
-            setShops(JSON.parse(res.getStore()))
-            console.log(res)
+            const shopRes = JSON.parse(res.getStore())
+            setShops(shopRes.results)
           })
           .catch((e: any) => {
             console.log(e)
           })
       })()
     })
-  })
+  }, [isChanged])
 
   return (
     <Root>
       <div className={classes.toolbar} />
       <H1>店舗検索</H1>
-
+      {shops.length === 0 ?
+        <P>周辺にお店がありません…。</P> :
+        <P>周辺にお店が {shops.length} 個ありました。</P>}
       <GoogleMapWrapper>
         <GoogleMapReact
           bootstrapURLKeys={{
@@ -65,8 +66,13 @@ const Search: React.FC = () => {
             lat={lat}
             lng={lng}
           />
-          {/* <Pin>とshopsをmap()で回す */}
-          {console.log(shops)}
+          {shops.map((shop: any, i: any) => (
+            <Pin
+              key={i}
+              lat={shop.geometry.location.lat}
+              lng={shop.geometry.location.lng}
+            />
+          ))}
         </GoogleMapReact>
       </GoogleMapWrapper>
     </Root>
@@ -76,11 +82,16 @@ const Search: React.FC = () => {
 const Root = styled.div`
   padding-bottom: 50px;
 `
+const GoogleMapWrapper = styled.div`
+  margin: 0 auto;
+  width: 500px;
+  height: 500px;
+`
 const H1 = styled.h1`
   text-align: center;
 `
-const GoogleMapWrapper = styled.div`
-  margin: 0 auto;
+const P = styled.p`
+  text-align: center;
 `
 
 export default Search

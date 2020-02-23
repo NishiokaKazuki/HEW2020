@@ -17,5 +17,5 @@ service WebAppService {
     rpc Store (messages.StoreRequest) returns (messages.StoreResponse) {}
     rpc Product (messages.ProductRequest) returns (messages.ProductResponse) {}
     rpc ClearingHistory (messages.ClearingHistoryRequest) returns (messages.ClearingHistoryResponse) {}
-    rpc Shop (messages.ShopRequest) returns (messages.ShopResponse) {}
+    rpc StorePlace (messages.StorePlaceRequest) returns (messages.StorePlaceResponse) {}
 }
