@@ -47,6 +47,7 @@ export const theme = createMuiTheme({
 
 const App: React.FC = () => {
     const dispatch = useDispatch()
+    const isChanged = true
 
     useEffect(() => {
         const token = User.get('token')
@@ -55,7 +56,7 @@ const App: React.FC = () => {
             dispatch(actions.getHistory(token))
             dispatch({ type: actionTypes.AUTHENTICATE_USER })
         }
-    })
+    }, [isChanged])
 
     return (
         <>
