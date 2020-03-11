@@ -49,7 +49,8 @@ static_resources:
       hosts:
         [
           {
+            # addressの指定方法どうしようか...
             socket_address:
-              { address: host.docker.internal, port_value: 49200 },
+              { address: 192.168.179.3, port_value: 49200 },
           },
         ]

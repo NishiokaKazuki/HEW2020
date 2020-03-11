@@ -20,10 +20,11 @@ INSERT INTO companies(name, disabled) VALUES
 DELETE FROM stores;
 
 INSERT INTO stores(company_id, image, address, disabled) VALUES
-    (1, 'image1', '滋賀県彦根市', 0),
+    (4, 'image1', '大阪府大阪市', 0),
     (2, 'image2', '岐阜県恵那市', 0),
     (3, 'image3', '大阪府堺市', 1),
-    (4, 'image4', '北極しろくま市', 0);
+    (4, 'image4', '北極しろくま市', 0),
+    (1, 'image5', '滋賀県彦根市', 0);
 
 DELETE FROM products;
 
@@ -36,6 +37,10 @@ INSERT INTO products(name, image, price, type, disabled) VALUES
 DELETE FROM rfid_tags;
 
 INSERT INTO rfid_tags(product_id, rfid_code, sold) VALUES
+    (1, '0003839724', 0),
+    (1, '0005841988', 0),
+    (2, '0013275377', 0),
+    (2, '0005897287', 0),
     (1, 'ABCDEFG', 0),
     (2, 'HIJKLMN', 0),
     (3, 'OPQRSTU', 0),

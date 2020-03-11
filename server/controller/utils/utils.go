@@ -2,6 +2,7 @@ package utils
 
 import (
 	"server/model/table"
+	"strings"
 	"time"
 
 	"github.com/boombuler/barcode"
@@ -23,7 +24,7 @@ func GetToken(user table.AppUsers) string {
 
 	token, _ := t.SignedString([]byte(HashPw(user.SignId + user.SignPw)))
 
-	return token
+	return strings.Replace(token, "_", "", -1)
 }
 
 func HashPw(pw string) string {

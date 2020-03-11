@@ -40,7 +40,7 @@ services:
       MYSQL_DATABASE: hew2020
       MYSQL_USER: root
       MYSQL_PASSWORD: secret
-      # TZ: 'Asia/Tokyo'
+      TZ: 'Asia/Tokyo'
     ports:
       - "13306:3306"
     container_name: hew2020-db
